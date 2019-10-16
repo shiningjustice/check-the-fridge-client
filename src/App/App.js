@@ -14,25 +14,45 @@ class App extends Component {
   state = {
     items: [],
     sections: [],
+    // search: '',
+    // filteredFolders: [],
+    // sort: '',
+    error: null,
   }
 
-  componentDidMount() {
-    Promise.all([
-      fetch(`${config.API_ENDPOINT}/items`),
-      fetch(`${config.API_ENDPOINT}/sections`)
-    ])
-      .then(([itemsRes, sectionsRes]) => {
+  formatQueryParams = params => {
+    const queryItems = Object.keys(params).map(
+      key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
+    )
+    return queryItems.join('&');
+  }
+
+  updateForOptions = (search, filteredFolders, sort) => {
+    console.log('updateForOptions ran' )
+    let params = {};
+
+    //If a instructions are passed into option X, then set params.X
+    search && (params.search = search);
+    filteredFolders.length > 0 && (params.filteredFolders = filteredFolders);
+    sort && (params.sort = sort);
+
+    let queryString = this.formatQueryParams(params);
+    const url = `${config.API_ENDPOINT}/items/options?${queryString}`
+
+    fetch(url)
+      .then(itemsRes => {
+        console.log('got something')
         if (!itemsRes.ok)
           return itemsRes.json().then(e => Promise.reject(e));
-        if (!sectionsRes.ok)
-          return sectionsRes.json().then(e => Promise.reject(e));
 
-        return Promise.all([itemsRes.json(), sectionsRes.json()])
+        return itemsRes.json()
       })
-      .then(([items, sections]) => {
-        this.setState({ items, sections })
+      .then((items) => {
+        this.setState({ items })
+        console.log('i fetched')
       })
       .catch(error => console.error({ error }))
+     
   }
 
   renderMainRoutes() {
@@ -57,14 +77,61 @@ class App extends Component {
     })
   }
 
+  // setSearch = searchTerm => {
+  //   this.setState({
+  //     search: searchTerm
+  //   })
+  // }
+
+  // setFilteredFolders = arrOfIds => {
+  //   this.setState({
+  //     filteredFolders: [...this.state.filteredFolders, arrOfIds]
+  //   })
+  // }
+
+  // setSort = sortType => {
+  //   this.setState({
+  //     sort: sortType
+  //   })
+  // }
+
+  componentDidMount() {
+    Promise.all([
+      fetch(`${config.API_ENDPOINT}/items`),
+      fetch(`${config.API_ENDPOINT}/sections`),
+    ])
+      .then(([itemsRes, sectionsRes]) => {
+        if (!itemsRes.ok)
+          return itemsRes.json().then(e => Promise.reject(e));
+        if (!sectionsRes.ok)
+          return sectionsRes.json().then(e => Promise.reject(e));
+
+        return Promise.all([itemsRes.json(), sectionsRes.json()])
+      })
+      .then(([items, sections]) => {
+        this.setState({ items, sections })
+      })
+      .catch(error => console.error({ error }))
+  }
+
+  
   render () {
     const value = {
       items: this.state.items,
       sections: this.state.sections,
+      search: this.state.search,
+      filteredFolders: this.state.filteredFolders,
+      sort: this.state.sort,
+      error: this.state.error,
       addItem: this.addItem,
-      deleteItem: this.deleteItem
+      deleteItem: this.deleteItem,
+      // setSearch: this.setSearch,
+      // setFilteredFolders: this.setFilteredFolders,
+      // setSort: this.setSort,
+      updateForOptions: this.updateForOptions
     }
-    // console.log(value.sections, value.items);
+    console.log(`search: ${value.search}, folders: ${value.filteredFolders}, sort: ${value.sort}`);
+    console.log(value.items)
     return (
       <ApiContext.Provider value={value}>
         <div className='App'>

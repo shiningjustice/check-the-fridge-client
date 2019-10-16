@@ -16,6 +16,7 @@ export default class ErrorPage extends Component {
 				<main className='error-page'>
 					<h1>Something seems to have gone wrong</h1>
 					<p>Try refreshing the page</p>
+					<p>{this.state.error}</p>
 				</main>
 			);
 		}

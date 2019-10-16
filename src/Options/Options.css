@@ -1,0 +1,11 @@
+.Options__div {
+  background: grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Options___fieldsets {
+  display: flex;
+  flex-direction: row;
+}

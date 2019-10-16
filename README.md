@@ -1,10 +1,16 @@
 # Check the Fridge Client App
 
 ## Notes for Phoebe
-Left off on getting front/backend to add note correctly 
+* not filtering by selected categories 
+
+* plus button isn't showing up when decreasing... have to refresh the page for it to show up (i thought the <li> would rerender when state is updated? 
+
+* set up tests 
+
+To do: Remove categories: breakfast, pet/baby, add (Frozen) to meat 
 
 ### Notes for next commit
-adds api endpoint, get, etc. but the post is pending 
+finalize increments too 
 
 ## Available Scripts
 
