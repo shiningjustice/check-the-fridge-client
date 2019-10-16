@@ -10,7 +10,6 @@ export default React.createContext({
   addItem: () => {},
   deleteItem: () => {},
   // setSearch: () => {},
-  // setFilteredFolders: () => {},
-  // setSort: () => {},
-  updateForOptions: () => {}
+  updateForOptions: () => {},
+  setSections: () => {}
 })

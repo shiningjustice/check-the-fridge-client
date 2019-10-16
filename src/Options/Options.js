@@ -18,10 +18,8 @@ export default class Options extends Component {
 	handleSubmit = e => {
 		e.preventDefault();
 		const { search, filteredFolders, sort } = this.state;
-		// setSearch(search);
-		// setFilteredFolders(filteredFolders);
-		// setSort(sort);
 		this.context.updateForOptions(search, filteredFolders, sort);
+
 	};
 
 	handleChangeFilter = id => {

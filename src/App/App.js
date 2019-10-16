@@ -17,6 +17,7 @@ class App extends Component {
     // search: '',
     // filteredFolders: [],
     // sort: '',
+    search: false,
     error: null,
   }
 
@@ -29,6 +30,7 @@ class App extends Component {
 
   updateForOptions = (search, filteredFolders, sort) => {
     console.log('updateForOptions ran' )
+
     let params = {};
 
     //If a instructions are passed into option X, then set params.X
@@ -41,7 +43,6 @@ class App extends Component {
 
     fetch(url)
       .then(itemsRes => {
-        console.log('got something')
         if (!itemsRes.ok)
           return itemsRes.json().then(e => Promise.reject(e));
 
@@ -49,7 +50,14 @@ class App extends Component {
       })
       .then((items) => {
         this.setState({ items })
-        console.log('i fetched')
+      })
+      .then(() => {
+        this.setState({
+          sections: this.state.sections.filter(section => {
+            return this.state.items.find(item => item.sectionId === section.id)
+          })
+        })
+        console.log(this.state.items)
       })
       .catch(error => console.error({ error }))
      
@@ -77,12 +85,6 @@ class App extends Component {
     })
   }
 
-  // setSearch = searchTerm => {
-  //   this.setState({
-  //     search: searchTerm
-  //   })
-  // }
-
   // setFilteredFolders = arrOfIds => {
   //   this.setState({
   //     filteredFolders: [...this.state.filteredFolders, arrOfIds]
@@ -94,6 +96,10 @@ class App extends Component {
   //     sort: sortType
   //   })
   // }
+
+  setSections = (sections) => {
+    this.setState({ sections })
+  }
 
   componentDidMount() {
     Promise.all([
@@ -120,15 +126,12 @@ class App extends Component {
       items: this.state.items,
       sections: this.state.sections,
       search: this.state.search,
-      filteredFolders: this.state.filteredFolders,
-      sort: this.state.sort,
       error: this.state.error,
       addItem: this.addItem,
       deleteItem: this.deleteItem,
-      // setSearch: this.setSearch,
-      // setFilteredFolders: this.setFilteredFolders,
-      // setSort: this.setSort,
-      updateForOptions: this.updateForOptions
+      setSearch: this.setSearch,
+      updateForOptions: this.updateForOptions,
+      setSections: this.setSections
     }
     console.log(`search: ${value.search}, folders: ${value.filteredFolders}, sort: ${value.sort}`);
     console.log(value.items)
