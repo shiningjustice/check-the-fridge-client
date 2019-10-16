@@ -96,8 +96,8 @@ export default class Options extends Component {
 					</div>
 
 					{/* Form buttons */}
-					<button className='Options__button' type='reset'>
-						Reset fields
+					<button className='Options__button' type='reset' onClick={() => this.context.getForStandard()}>
+						Reset form
 					</button>
 					<button className='Options__button' type='submit'>
 						Apply Options

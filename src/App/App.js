@@ -59,49 +59,16 @@ class App extends Component {
         })
         console.log(this.state.items)
       })
+      .then(() => {
+        this.setState({
+          search: true
+        })
+      })
       .catch(error => console.error({ error }))
      
   }
 
-  renderMainRoutes() {
-    return (
-      <>
-        <Route exact path='/' component={ListView} />
-        <Route path='/add-item' component={AddItem} />
-      </>
-    );
-  }
-
-  addItem = item => {
-    this.setState({
-      items: [...this.state.items, item]
-    })
-  }
-
-  deleteItem = itemId => {
-    const newItems = this.state.items.filter(item => item.id !==itemId);
-    this.setState({
-      items: newItems
-    })
-  }
-
-  // setFilteredFolders = arrOfIds => {
-  //   this.setState({
-  //     filteredFolders: [...this.state.filteredFolders, arrOfIds]
-  //   })
-  // }
-
-  // setSort = sortType => {
-  //   this.setState({
-  //     sort: sortType
-  //   })
-  // }
-
-  setSections = (sections) => {
-    this.setState({ sections })
-  }
-
-  componentDidMount() {
+  getForStandard = () => {
     Promise.all([
       fetch(`${config.API_ENDPOINT}/items`),
       fetch(`${config.API_ENDPOINT}/sections`),
@@ -120,6 +87,36 @@ class App extends Component {
       .catch(error => console.error({ error }))
   }
 
+  addItem = item => {
+    this.setState({
+      items: [...this.state.items, item]
+    })
+  }
+
+  deleteItem = itemId => {
+    const newItems = this.state.items.filter(item => item.id !==itemId);
+    this.setState({
+      items: newItems
+    })
+  }
+
+  setSections = (sections) => {
+    this.setState({ sections })
+  }
+
+  renderMainRoutes() {
+    return (
+      <>
+        <Route exact path='/' component={ListView} />
+        <Route path='/add-item' component={AddItem} />
+      </>
+    );
+  }
+
+  componentDidMount() {
+    this.getForStandard();
+  }
+
   
   render () {
     const value = {
@@ -131,7 +128,7 @@ class App extends Component {
       deleteItem: this.deleteItem,
       setSearch: this.setSearch,
       updateForOptions: this.updateForOptions,
-      setSections: this.setSections
+      getForStandard: this.getForStandard,
     }
     console.log(`search: ${value.search}, folders: ${value.filteredFolders}, sort: ${value.sort}`);
     console.log(value.items)
