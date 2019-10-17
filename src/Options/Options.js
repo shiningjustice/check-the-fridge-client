@@ -14,18 +14,17 @@ export default class Options extends Component {
 		sort: ''
 	};
 
-
-	handleSubmit = e => {
-		e.preventDefault();
-		const { search, filteredFolders, sort } = this.state;
-		this.context.updateForOptions(search, filteredFolders, sort);
-
-	};
-
-	handleChangeFilter = id => {
+	handleAddFilter = id => {
 		this.setState({
 			filteredFolders: [...this.state.filteredFolders, id]
 		});
+		console.log('added')
+	}
+	handleRemoveFilter = id => {
+		this.setState({
+			filteredFolders: this.state.filteredFolders.filter(folderId => folderId !== id)
+		});
+		console.log('removed')
 	}
 	handleChangeSort = e => {
 		this.setState({
@@ -38,6 +37,22 @@ export default class Options extends Component {
 		})
 	}
 
+	handleSubmit = e => {
+		e.preventDefault();
+		const { search, filteredFolders } = this.state;
+		console.log(`in options, search = ${search} and filteredFolders = ${filteredFolders}`)
+		this.context.updateForOptions(search, filteredFolders);
+		//setSort will be called in a chain to the updateForOptions function
+		console.log({search})
+	}
+	handleReset = () => {
+		this.context.getForStandard()
+		this.setState({
+			search: '',
+			filteredFolders: [],
+			sort: ''
+		})
+	}
 
 	render() {
 		const sections = this.context.sections;
@@ -66,7 +81,8 @@ export default class Options extends Component {
 							{sections.map(section => (
 								<Checkbox 
 									section={section} 
-									addToArray={this.addToArray}
+									handleAddFilter={this.handleAddFilter}
+									handleRemoveFilter={this.handleRemoveFilter}
 									key={section.id}
 								/>
 							))}
@@ -75,34 +91,42 @@ export default class Options extends Component {
 						{/* Option: Sort By */}
 						<fieldset className='Option__fieldset'>
 							<h3>Sort By:</h3>
-							<select className='Option__select' onChange={() => this.handleChangeSort()}>
+							<select className='Option__select' onChange={(e) => this.handleChangeSort(e)}>
 								<option value='' className='Option__option'>
 									Select one
 								</option>
-								<option value='ageOldest' className='Option__option'>
-									Age: Oldest to newest
+								<option value='ageOld' className='Option__option'>
+									Age: Oldest First
 								</option>
-								<option value='ageNewest' className='Option__option'>
-									Age: Newest to oldest
+								<option value='ageNew' className='Option__option'>
+									Age: Newest First
 								</option>
-								<option value='nameAlpha' className='Option__option'>
+								<option value='alpha' className='Option__option'>
 									Name: A to Z
 								</option>
-								<option value='quantLow' className='Option__option'>
+								{/* <option value='quantLow' className='Option__option'>
 									Quantity: Least to greatest
-								</option>
+								</option> */}
 							</select>
 						</fieldset>
 					</div>
 
 					{/* Form buttons */}
-					<button className='Options__button' type='reset' onClick={() => this.context.getForStandard()}>
+					<button className='Options__button' type='reset' onClick={() => this.handleReset()}>
 						Reset form
 					</button>
 					<button className='Options__button' type='submit'>
 						Apply Options
 					</button>
 				</form>
+				{/* {this.context.searchOn && <p>Displaying results for 
+					{this.context.searchTerm && ` search term ${this.context.searchTerm},`} 
+					{this.context.filteredFolders && ` section(s) ${this.context.sections.map(section => {
+						if (section.id === this.context.filteredFolders.map(id => id)) {
+							return section.name
+						}
+					})
+					}}`} </p>} */}
 			</div>
 		);
 	}

@@ -6,11 +6,15 @@ export default class Checkbox extends Component {
 	};
 
 	handleClick = id => {
-		this.setState({
-			checked: !this.state.checked
-    });
-    
-    this.state.checked && this.props.handleChangeFilter(id);
+		var toggleChecked = new Promise((resolve, reject) => {
+			resolve (this.setState({ checked: !this.state.checked }))
+		})
+		toggleChecked.then(() => 
+				this.state.checked 
+					? this.props.handleAddFilter(id)
+					: this.props.handleRemoveFilter(id)
+			)
+			
 	};
 
 	render() {

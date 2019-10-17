@@ -13,33 +13,59 @@ import './App.css';
 class App extends Component {
   state = {
     items: [],
+    search: '',
     sections: [],
-    // search: '',
-    // filteredFolders: [],
-    // sort: '',
-    search: false,
+    sort: '',
+    searchOn: true,
     error: null,
   }
 
+  // sortItems = () => {
+	// 	const sortBy = this.state.sort;
+	// 	const items = this.context.items;
+		
+	// 	const datesAdded = items.map(item => item.dateAdded)
+
+	// 	// ageOld / oldest to newest
+	// 	if (sortBy === 'ageOld') {
+	// 		datesAdded.sort();
+	// 		return datesAdded.map(date => items.map(item => (date === item.dateAdded) && item));
+	// 	}
+	// 	// ageNew / newest to oldest
+	// 	if (sortBy === 'ageOld') {
+	// 		datesAdded.sort((a, b) => b - a)
+
+	// 		return datesAdded.map(date => items.map(item => (date === item.dateAdded) && item));
+	// 	}
+	// 	// alpha / alphabetical by item
+	// 	// quantLow / relatively low 
+	// }
+
   formatQueryParams = params => {
-    const queryItems = Object.keys(params).map(
-      key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`
-    )
-    return queryItems.join('&');
+    const esc = encodeURIComponent;
+    const query = Object.keys(params)
+      .map(k => {
+        if (Array.isArray(params[k])) {
+          return params[k].map(arrItem => esc(k) + '=' + esc(arrItem)).join('&');
+        } else {
+          return esc(k) + '=' + esc(params[k]);
+        }
+      })
+      .join('&')
+    return query;
   }
 
-  updateForOptions = (search, filteredFolders, sort) => {
+  updateForOptions = (search, filteredFolders) => {
     console.log('updateForOptions ran' )
-
+    console.log(`in app, search = ${search} and filteredFolders = ${filteredFolders}`)
     let params = {};
 
-    //If a instructions are passed into option X, then set params.X
-    search && (params.search = search);
-    filteredFolders.length > 0 && (params.filteredFolders = filteredFolders);
-    sort && (params.sort = sort);
-
+    //If search options are passed into option X, then set params.X
+    (filteredFolders.length > 0) && (params.filteredFolders = filteredFolders);
     let queryString = this.formatQueryParams(params);
-    const url = `${config.API_ENDPOINT}/items/options?${queryString}`
+    console.log(queryString)
+
+    const url = `${config.API_ENDPOINT}/results?${queryString}`
 
     fetch(url)
       .then(itemsRes => {
@@ -49,26 +75,28 @@ class App extends Component {
         return itemsRes.json()
       })
       .then((items) => {
-        this.setState({ items })
-      })
-      .then(() => {
         this.setState({
+          items,
           sections: this.state.sections.filter(section => {
-            return this.state.items.find(item => item.sectionId === section.id)
-          })
+            return section.id === this.state.items.find(item => item.sectionId)
+          }), 
+          search: '', 
         })
         console.log(this.state.items)
       })
-      .then(() => {
-        this.setState({
-          search: true
-        })
-      })
       .catch(error => console.error({ error }))
-     
   }
 
   getForStandard = () => {
+    //reset state
+    this.setState({
+      items: [],
+      sections: [],
+      sort: '',
+      search: false,
+      error: null,
+    })
+
     Promise.all([
       fetch(`${config.API_ENDPOINT}/items`),
       fetch(`${config.API_ENDPOINT}/sections`),
@@ -100,8 +128,12 @@ class App extends Component {
     })
   }
 
-  setSections = (sections) => {
+  setSections = sections => {
     this.setState({ sections })
+  }
+
+  setItems = items => {
+    this.setState({ items })
   }
 
   renderMainRoutes() {
@@ -123,10 +155,13 @@ class App extends Component {
       items: this.state.items,
       sections: this.state.sections,
       search: this.state.search,
+      searchOn: true,
       error: this.state.error,
       addItem: this.addItem,
       deleteItem: this.deleteItem,
       setSearch: this.setSearch,
+      setSort: this.sort,
+      setItems: this.setItems,
       updateForOptions: this.updateForOptions,
       getForStandard: this.getForStandard,
     }
@@ -146,6 +181,10 @@ class App extends Component {
               {this.renderMainRoutes()}
             </main>
           </ErrorPage>
+
+          <footer>
+            Created by <a href='https://shiningjustice.github.io'>Phoebe Law</a>
+          </footer>
         </div>        
       </ApiContext.Provider>
     )

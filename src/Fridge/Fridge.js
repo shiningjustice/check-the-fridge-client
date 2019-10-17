@@ -6,7 +6,7 @@ export default class Fridge extends Component {
 	static contextType = ApiContext;
 
 	render() {
-    const { sections=[] } = this.context;
+    const { sections=[] }= this.context;
 		return (
 			<>
 				<h2>Your Fridge</h2>

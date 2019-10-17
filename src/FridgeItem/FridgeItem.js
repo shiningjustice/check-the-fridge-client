@@ -78,8 +78,14 @@ export default class FridgeItem extends Component {
             <span className='FridgeItem__info'>Note:</span> {note}
           </li>}
         </ul>
-        {(currQuantity !== 1) && <button className='FridgeItem__button' onClick={() => this.updateCurrQuantity(-1)}>-</button>}
-        {(currQuantity < initQuantity) && <button className='FridgeItem__button' onClick={() => this.updateCurrQuantity(1)} >+</button>}
+
+        {/* if there's more than one item left, have the decrement button show up */}
+        {(this.state.amount > 1) && <button className='FridgeItem__button' onClick={() => this.updateCurrQuantity(-1)}>-</button>}
+
+        {/* if the current amount is less than the original amount, let an increment button show up */}
+        {(this.state.amount < initQuantity) && <button className='FridgeItem__button' onClick={() => this.updateCurrQuantity(1)} >+</button>}
+
+        {/* delete button */}
         <button className='FridgeItem__button' onClick={() => this.deleteItem(this.props.id)}>Delete</button>
       </>
     )
