@@ -73,12 +73,11 @@ export default class Options extends Component {
 	// 	const isChecked = !stateSection;
 	// 	this.setState(prevState => ({ filteredFolders: prevState.filteredFolders.set(section, isChecked) }))
 	// }
-	// VERSION 1 AND 2 OF CHECKBOXES 
-	// handleChangeSort = e => {
-	// 	this.setState({
-	// 		sort: e.target.value
-	// 	})
-	// }
+	handleChangeSort = e => {
+		this.setState({
+			sort: e.target.value
+		})
+	}
 	
 	//VERSION 2
 	// handleSubmitFilter = () => {
@@ -154,7 +153,7 @@ export default class Options extends Component {
 							))} */}
 							<Checkboxes 
 								name='Category (Section)'
-								sections={this.context.sections}
+								sections={sections}
 								handleChange={this.handleSortCheckboxes}
 								filteredFolders={this.state.filteredFolders}
 							/>

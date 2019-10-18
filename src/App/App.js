@@ -79,21 +79,28 @@ class App extends Component {
         return itemsRes.json()
       })
       .then((items) => {
+        console.log(items);
         let newSections; 
-        filteredFolders = filteredFolders.map(folder => parseInt(folder));
-        //sort is an array with items
+
+        //Handle display of sections in fridge and checkboxes
+        filteredFolders= filteredFolders.map(folder => parseInt(folder));
+        //filteredFolders is an array with items
+        //using length instead of truthy because is sent in as an array, whose value is truthy
         if (filteredFolders.length > 0) {
           console.log('you rang')
           newSections = this.state.sections.filter(section =>  filteredFolders.indexOf(section.id) !== -1)
-        } //sort is a string
-        else if (filteredFolders && typeof(sort) !== 'object') {
+        } //filteredFolders is a string
+        //using length instead of truthy because is sent in as an array, whose value is truthy
+        else if (filteredFolders.length > 0 && typeof(sort) !== 'object') {
+          console.log('actually here')
           newSections = filteredFolders
-        } //sort doesn't have any items in it/is falsy
-         else  {
+        } //filteredFolders doesn't have any items in it/is falsy
+        else  {
+          console.log('here')
           newSections = this.state.sections.filter(section => this.state.items.find(item => section.id === item.sectionId))
         }
         console.log(filteredFolders, typeof(filteredFolders), {newSections})
-
+        
         this.setState({
           items,
           //display only sections that there are items for -- if true return section
@@ -186,6 +193,7 @@ class App extends Component {
       updateForOptions: this.updateForOptions,
       getForStandard: this.getForStandard,
     }
+    console.log(`App.js: render: items = ${this.state.items} sections = ${value.sections}`)
     return (
       <ApiContext.Provider value={value}>
         <div className='App'>
