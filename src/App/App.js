@@ -55,34 +55,52 @@ class App extends Component {
     return query;
   }
 
-  updateForOptions = (search, filteredFolders) => {
-    console.log('updateForOptions ran' )
-    console.log(`in app, search = ${search} and filteredFolders = ${filteredFolders}`)
+  updateForOptions = (search, filteredFolders, sort) => {
+    console.log('App.js: UFO: updateForOptions ran' )
+    console.log(`App.js: UFO: search = ${search} and filteredFolders = ${filteredFolders} and sort = ${sort}`)
     let params = {};
 
     //If search options are passed into option X, then set params.X
+    search && (params.search = search);
     (filteredFolders.length > 0) && (params.filteredFolders = filteredFolders);
+    sort && (params.sort = sort);
+
     let queryString = this.formatQueryParams(params);
-    console.log(queryString)
 
     const url = `${config.API_ENDPOINT}/results?${queryString}`
+    console.log('App.js: UFO: ' + url)
 
     fetch(url)
       .then(itemsRes => {
+        console.log('App.js: UFO: FETCH CALL RAN')
         if (!itemsRes.ok)
           return itemsRes.json().then(e => Promise.reject(e));
 
         return itemsRes.json()
       })
       .then((items) => {
+        let newSections; 
+        filteredFolders = filteredFolders.map(folder => parseInt(folder));
+        //sort is an array with items
+        if (filteredFolders.length > 0) {
+          console.log('you rang')
+          newSections = this.state.sections.filter(section =>  filteredFolders.indexOf(section.id) !== -1)
+        } //sort is a string
+        else if (filteredFolders && typeof(sort) !== 'object') {
+          newSections = filteredFolders
+        } //sort doesn't have any items in it/is falsy
+         else  {
+          newSections = this.state.sections.filter(section => this.state.items.find(item => section.id === item.sectionId))
+        }
+        console.log(filteredFolders, typeof(filteredFolders), {newSections})
+
         this.setState({
           items,
-          sections: this.state.sections.filter(section => {
-            return section.id === this.state.items.find(item => item.sectionId)
-          }), 
+          //display only sections that there are items for -- if true return section
+          // sections: this.state.sections.filter(section => this.state.items.find(item => section.id === item.sectionId)),
+          sections: newSections,
           search: '', 
         })
-        console.log(this.state.items)
       })
       .catch(error => console.error({ error }))
   }
@@ -128,12 +146,15 @@ class App extends Component {
     })
   }
 
-  setSections = sections => {
-    this.setState({ sections })
-  }
-
-  setItems = items => {
-    this.setState({ items })
+  resetAppState = () => {
+    this.setState({
+      items: [],
+      search: '',
+      sections: [],
+      sort: '',
+      searchOn: true,
+      error: null,
+    })
   }
 
   renderMainRoutes() {
@@ -161,12 +182,10 @@ class App extends Component {
       deleteItem: this.deleteItem,
       setSearch: this.setSearch,
       setSort: this.sort,
-      setItems: this.setItems,
+      resetAppState: this.resetAppState,
       updateForOptions: this.updateForOptions,
       getForStandard: this.getForStandard,
     }
-    console.log(`search: ${value.search}, folders: ${value.filteredFolders}, sort: ${value.sort}`);
-    console.log(value.items)
     return (
       <ApiContext.Provider value={value}>
         <div className='App'>

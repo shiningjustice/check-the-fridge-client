@@ -1,12 +1,18 @@
 import React, { Component } from "react";
 import Options from "../Options/Options";
 import Fridge from "../Fridge/Fridge";
+import ApiContext from "../ApiContext";
 
 export default class ListView extends Component {
+	static contextType = ApiContext;
+
 	render() {
+		const { sections=[] } = this.context;
 		return (
 			<main className='ListView__main'>
-				<Options />
+				<Options 
+					sections={sections}
+				/>
 
 				<Fridge />
 			</main>

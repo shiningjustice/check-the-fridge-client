@@ -11,6 +11,7 @@ export default React.createContext({
   addItem: () => {},
   deleteItem: () => {},
   updateForOptions: () => {},
+  resetAppState: () => {},
   setSort: () => {},
   setItems: () => {},
   getForStandard: () => {}

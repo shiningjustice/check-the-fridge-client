@@ -3,14 +3,12 @@
 ## Notes for Phoebe
 * I think the results stuff is good, except for how to pass the params/ how to get the server to render the right stuff. 
 
-* plus button isn't showing up when decreasing... have to refresh the page for it to show up (i thought the <li> would rerender when state is updated? 
-
 * set up tests 
 
 To do: Remove categories: breakfast, pet/baby, add (Frozen) to meat 
 
 ### Notes for next commit
-finalize increments too 
+
 
 ## Available Scripts
 

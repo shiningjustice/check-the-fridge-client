@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import ApiContext from "../ApiContext";
-import Checkbox from "./Checkbox";
+import Checkboxes from "./Checkbox.jsx";
 import "./Options.css";
+
+// VERSION 2
+// const checkboxSections = new Map();
 
 export default class Options extends Component {
 	static contextType = ApiContext;
@@ -11,48 +14,106 @@ export default class Options extends Component {
 	state = {
 		search: '',
 		filteredFolders: [],
-		sort: ''
+		// VERSION 2
+		// filteredFolders: checkboxSections,
+		sort: '', 
 	};
 
-	handleAddFilter = id => {
-		this.setState({
-			filteredFolders: [...this.state.filteredFolders, id]
-		});
-		console.log('added')
-	}
-	handleRemoveFilter = id => {
-		this.setState({
-			filteredFolders: this.state.filteredFolders.filter(folderId => folderId !== id)
-		});
-		console.log('removed')
-	}
-	handleChangeSort = e => {
-		this.setState({
-			sort: e.target.value
-		})
-	}
+	// VERSION 2
+	// constructor(props) {
+	// 	super(props);
+
+	// 	this.props.sections.map(section => {
+	// 		checkboxSections.set(section.id, false)
+	// 	});
+		
+	// 	this.state = {
+	// 		search: '',
+	// 		filteredFolders: checkboxSections,
+	// 		sort: '', 
+	// 	};
+	// }
+	
 	handleChangeSearch = e => {
 		this.setState({
 			search: e.target.value
 		})
 	}
+	handleSortCheckboxes = e => {
+		const newSelectedId = e.target.value;
+		let newSelectionArray;
 
+		if(this.state.filteredFolders.indexOf(newSelectedId) > -1) {
+			newSelectionArray = this.state.filteredFolders.map(s => s !== newSelectedId)
+		} else {
+			newSelectionArray = [...this.state.filteredFolders, newSelectedId]
+		}
+
+		this.setState( prevState => ({
+			filteredFolders: newSelectionArray
+		}))
+	}
+	// VERSION 1 OF CHECKBOXES
+	// handleAddFilter = id => {
+	// 	this.setState({
+	// 		filteredFolders: [...this.state.filteredFolders, id]
+	// 	});
+	// 	console.log('Options.js: checkbox added')
+	// }
+	// handleRemoveFilter = id => {
+	// 	this.setState({
+	// 		filteredFolders: this.state.filteredFolders.filter(folderId => folderId !== id)
+	// 	});
+	// 	console.log('Options.js: checkbox removed')
+	// }
+	// VERSION 2 OF CHECKBOXES
+	// handleChangeFilter = (e) => {
+	// 	const section = parseInt(e.target.id); 
+	// 	const stateSection = this.state.filteredFolders.get(parseInt(section))
+	// 	const isChecked = !stateSection;
+	// 	this.setState(prevState => ({ filteredFolders: prevState.filteredFolders.set(section, isChecked) }))
+	// }
+	// VERSION 1 AND 2 OF CHECKBOXES 
+	// handleChangeSort = e => {
+	// 	this.setState({
+	// 		sort: e.target.value
+	// 	})
+	// }
+	
+	//VERSION 2
+	// handleSubmitFilter = () => {
+	// 	const checkedIds = [];
+	// 	this.state.filteredFolders.forEach((val, key) => {
+	// 		if (val) {
+	// 			checkedIds.push(key)
+	// 		}
+	// 	})
+	// 	console.log('checked items: ', checkedIds)
+	// }
 	handleSubmit = e => {
 		e.preventDefault();
-		const { search, filteredFolders } = this.state;
-		console.log(`in options, search = ${search} and filteredFolders = ${filteredFolders}`)
-		this.context.updateForOptions(search, filteredFolders);
-		//setSort will be called in a chain to the updateForOptions function
-		console.log({search})
+		const { search, filteredFolders, sort } = this.state;
+	
+		console.log(`Options.js: search = ${search} and filteredFolders = ${filteredFolders} and sort = ${sort}`)
+		console.log(filteredFolders)
+
+		// VERSION 2
+		// this.handleSubmitFilter();
+		this.context.updateForOptions(search, filteredFolders, sort);
 	}
 	handleReset = () => {
-		this.context.getForStandard()
+		//reset App, Options, and Checkbox states
+		this.context.resetAppState()
 		this.setState({
 			search: '',
 			filteredFolders: [],
+			// VERSION 2 OF CHECKBOXES
+			// filteredFolders: checkboxSections,
 			sort: ''
 		})
+		this.context.getForStandard()
 	}
+
 
 	render() {
 		const sections = this.context.sections;
@@ -70,22 +131,33 @@ export default class Options extends Component {
 					
 					<div className='Options___fieldsets'>
 						<fieldset className='Options_fieldset'>
-							<label htmlFor='search'>Search</label>
+							<label htmlFor='search'>Search Name</label>
 							<input name='search' type='text' onChange={(e) => this.handleChangeSearch(e)}></input>
 						</fieldset>
 
 						{/* Option: Filter by category */}
 						<fieldset className='Option__fieldset'>
 							<h3>Filter By:</h3>
-							<p className='Option__p'>Category (Section)</p>
+							{/* VERSION 1 AND 2  */}
+							{/* <p className='Option__p'>Category (Section)</p>
 							{sections.map(section => (
-								<Checkbox 
-									section={section} 
-									handleAddFilter={this.handleAddFilter}
-									handleRemoveFilter={this.handleRemoveFilter}
-									key={section.id}
-								/>
-							))}
+								<label key={section.id}>
+									{section.name}
+									<Checkbox
+										className='Options___Checkbox'
+										id={section.id}
+										name={section.name}
+										checked={this.state.filteredFolders.get(section.id)}
+										onChange={(e) => this.handleChangeFilter(e)}
+									/>
+								</label>
+							))} */}
+							<Checkboxes 
+								name='Category (Section)'
+								sections={this.context.sections}
+								handleChange={this.handleSortCheckboxes}
+								filteredFolders={this.state.filteredFolders}
+							/>
 						</fieldset>
 
 						{/* Option: Sort By */}
