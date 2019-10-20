@@ -196,7 +196,6 @@ class App extends Component {
       updateForOptions: this.updateForOptions,
       getForStandard: this.getForStandard,
     }
-    console.log(`App.js: render: items = ${this.state.items} sections = ${value.sections}`)
     return (
       <ApiContext.Provider value={value}>
         <div className='App'>

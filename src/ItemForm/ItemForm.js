@@ -116,12 +116,10 @@ export default class ItemForm extends Component {
 		const { item } = this.props;
 		
 		console.log(item)
-    // const name = item.name;
-    // const sectionId = item.sectionId;
-    // const quantity = item.quantity;
-    // const note = item.note;
-
-		console.log(item)
+    const name = item.name;
+    const sectionId = item.sectionId;
+    const quantity = item.currQuantity;
+    const note = item.note;
 		
     return (
 			<section className={formName}>
@@ -150,7 +148,7 @@ export default class ItemForm extends Component {
 							type='text'
 							name='name'
               id='name'
-              // defaultValue={name && name}
+              defaultValue={name && name}
 							value={this.state.name.value}
 							onChange={e => this.handleInputChange(e)}
 							required
@@ -166,6 +164,7 @@ export default class ItemForm extends Component {
 						<select
 							name='sectionId'
 							id='sectionId'
+							defaultValue={sectionId && sectionId}
 							value={this.state.sectionId.value}
 							onChange={e => this.handleInputChange(e)}
 							required
@@ -189,6 +188,7 @@ export default class ItemForm extends Component {
 							type='number'
 							name='quantity'
 							id='quantity'
+							defaultValue={quantity && quantity}
 							value={this.state.quantity.value}
 							onChange={e => this.handleInputChange(e)}
 							required
@@ -202,6 +202,7 @@ export default class ItemForm extends Component {
 							type='text'
 							name='note'
 							id='note'
+							defaultValue={note && note}
 							value={this.state.note.value}
 							onChange={e => this.handleInputChange(e)}
 						></textarea>
