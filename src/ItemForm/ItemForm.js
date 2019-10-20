@@ -115,7 +115,7 @@ export default class ItemForm extends Component {
 
 		const { item } = this.props;
 		
-		console.log(item.id)
+		console.log(item)
     // const name = item.name;
     // const sectionId = item.sectionId;
     // const quantity = item.quantity;
@@ -143,9 +143,9 @@ export default class ItemForm extends Component {
 					<div>
 						<label htmlFor='name'>
               Name
-              {' '}
               <Required />
             </label>
+						{' '}
 						<input
 							type='text'
 							name='name'
@@ -160,9 +160,9 @@ export default class ItemForm extends Component {
 					<div>
 						<label htmlFor='sectionId'>
               Section
-              {' '}
               <Required />  
             </label>
+						{' '}
 						<select
 							name='sectionId'
 							id='sectionId'
@@ -182,9 +182,9 @@ export default class ItemForm extends Component {
 					<div>
 						<label htmlFor='quantity'>
               Quantity
-              {' '}
               <Required />  
             </label>
+						{' '}
 						<input
 							type='number'
 							name='quantity'
@@ -197,6 +197,7 @@ export default class ItemForm extends Component {
 
 					<div>
 						<label htmlFor='quantity'>Note</label>
+						{' '}
 						<textarea
 							type='text'
 							name='note'

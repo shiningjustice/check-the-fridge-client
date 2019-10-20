@@ -7,16 +7,21 @@ export default class EditItem extends Component {
   static contextType = ApiContext;
 
   render () {
-    const { items } = this.context;
+    let { items } = this.context;
     console.log(items);
 
+    if (items.length === 0) {
+      return null;
+    }
     //i need to get the item from the array. i can't index it because if it sorts differently like with a sort it wont' work. i need to get it by the id
 
-    const itemId = this.props.match.params.id;
-    // let item = items.filter(item => item.id !== 2);
-    let item = items[0];
+    const itemId = this.props.match.params.id; // <-- returns 2
+    const item = items.find(item => item.id === itemId); // item here returns undefined
 
-    // console.log(item.id)
+    //if i run the code below and comment out line 19
+    // const item = items[0]; <-- this returns the correct item
+    // console.log(item.id); <-- this returns 2, like it should 
+    
     return (
       <ItemForm
         formName='EditItem'
