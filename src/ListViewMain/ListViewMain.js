@@ -3,7 +3,7 @@ import Options from "../Options/Options";
 import Fridge from "../Fridge/Fridge";
 import ApiContext from "../ApiContext";
 
-export default class ListView extends Component {
+export default class ListViewMain extends Component {
 	static contextType = ApiContext;
 
 	render() {

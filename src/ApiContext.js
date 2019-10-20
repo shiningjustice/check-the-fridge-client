@@ -9,10 +9,9 @@ export default React.createContext({
   searchOn: false, 
   error: null,
   addItem: () => {},
+  editItem: () => {},
   deleteItem: () => {},
   updateForOptions: () => {},
-  resetAppState: () => {},
-  setSort: () => {},
-  setItems: () => {},
+  setCurrentItemId: () => {},
   getForStandard: () => {}
 })

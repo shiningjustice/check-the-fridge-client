@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import FridgeItem from '../FridgeItem/FridgeItem';
-import ApiContext from '../ApiContext'
+// import EmptySection from './EmptySection/EmptySection';
+import ApiContext from '../ApiContext';
 
 import './FridgeSection.css'
 
@@ -10,12 +11,22 @@ const now = new Date();
 let daysAgo;
 let monthsAgo;
 
+//console.log(cleanup --- move a lot of this logic to fridgeItem)
+
 export default class FridgeSection extends Component {
   static contextType = ApiContext;
 
   static defaultProps = {
     match: {
       params: {}
+    }
+  }
+
+  addsEmptyMessage = name => {
+    if (this.context.items.length === 0) {
+      return (
+        <li></li>
+      )
     }
   }
 
@@ -50,8 +61,9 @@ export default class FridgeSection extends Component {
     this.calculateTimePassed(item.dateAdded);
     let className;
 
-    //If item goes bad quickest (fruit and veggies)
-    if (item.sectionId === 1 || item.sectionId === 2) {
+    //If item goes bad quickest (fruit, veggies, and  leftovers)
+    if (item.sectionId === 1 || item.sectionId === 2 || item.section === 11) {
+    // if ([1, 2, 11].indexOf(item.sectionId) > 0) {
       if (daysAgo <= 7) {
         className = 'age_good'
       }
@@ -117,6 +129,7 @@ export default class FridgeSection extends Component {
         </li>
       )
     }
+
   }
   
   render() {

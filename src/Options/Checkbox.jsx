@@ -1,13 +1,14 @@
 import React from 'react';
 
-const Checkboxes = (props) => {
+const Checkboxes = props => {
 
 	return ( <div>
 		<label htmlFor={props.name} className='Options__label'>{props.name}</label>
 		<div className='Options___checkbox'>
 			{props.sections.map(section => {
 				return (
-					<label key={section.id}>
+					<div key={section.id}>
+						<label>
 						<input
 							className='form-checkbox'
 							id={section.id}
@@ -19,6 +20,7 @@ const Checkboxes = (props) => {
 						/> 
 						{section.name}
 					</label>
+					</div>
 				)
 			})}
 		</div>

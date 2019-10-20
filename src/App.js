@@ -1,45 +1,29 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 
-import ListView from '../ListView/ListView';
-import AddItem from '../AddItem/AddItem';
-import config from '../config';
-import ApiContext from '../ApiContext';
+import HomeMain from './HomeMain/HomeMain';
+import HomeNav from './HomeNav/HomeNav';
+import ListViewMain from './ListViewMain/ListViewMain';
+import ListViewNav from './ListViewNav/ListViewNav';
+import AddItem from './AddItem/AddItem';
+import EditItem from './EditItem/EditItem';
+import config from './config';
+import ApiContext from './ApiContext';
 
-import ErrorPage from '../ErrorPage';
+import ErrorPage from './ErrorPage';
 
 import './App.css';
 
 class App extends Component {
   state = {
     items: [],
-    search: '',
     sections: [],
+    search: '',
     sort: '',
     searchOn: true,
+    currentItemId: '',
     error: null,
   }
-
-  // sortItems = () => {
-	// 	const sortBy = this.state.sort;
-	// 	const items = this.context.items;
-		
-	// 	const datesAdded = items.map(item => item.dateAdded)
-
-	// 	// ageOld / oldest to newest
-	// 	if (sortBy === 'ageOld') {
-	// 		datesAdded.sort();
-	// 		return datesAdded.map(date => items.map(item => (date === item.dateAdded) && item));
-	// 	}
-	// 	// ageNew / newest to oldest
-	// 	if (sortBy === 'ageOld') {
-	// 		datesAdded.sort((a, b) => b - a)
-
-	// 		return datesAdded.map(date => items.map(item => (date === item.dateAdded) && item));
-	// 	}
-	// 	// alpha / alphabetical by item
-	// 	// quantLow / relatively low 
-	// }
 
   formatQueryParams = params => {
     const esc = encodeURIComponent;
@@ -146,6 +130,17 @@ class App extends Component {
     })
   }
 
+  editItem = item => {
+    //create an array of the items, minus the edited item
+    let newItems = this.state.items.filter(i => i.id !== item.id);
+    //add the edited item in its original place
+    newItems.splice((item.id-1), 0, item)
+
+    this.setState({
+      items: newItems
+    })
+  }
+
   deleteItem = itemId => {
     const newItems = this.state.items.filter(item => item.id !==itemId);
     this.setState({
@@ -153,22 +148,29 @@ class App extends Component {
     })
   }
 
-  resetAppState = () => {
+  setCurrentItemId = id => {
     this.setState({
-      items: [],
-      search: '',
-      sections: [],
-      sort: '',
-      searchOn: true,
-      error: null,
+      currentItemId: id
     })
   }
 
+  renderNavRoutes() {
+    return (
+      <>
+        <Route exact path='/' component={HomeNav} />
+        <Route path='/dashboard' component={ListViewNav} />
+        <Route path='/add-item' component={ListViewNav} />
+      </>
+    )
+  }
   renderMainRoutes() {
     return (
       <>
-        <Route exact path='/' component={ListView} />
+        <Route exact path='/' component={HomeMain} />
+        <Route path='/dashboard' component={ListViewMain} />
         <Route path='/add-item' component={AddItem} />
+        <Route path='/edit-item/:itemId' component={EditItem} />
+        {/* <Route path='/edit-item/:itemId' component={EditItem} /> */}
       </>
     );
   }
@@ -180,16 +182,16 @@ class App extends Component {
   
   render () {
     const value = {
+      state: this.state,
       items: this.state.items,
       sections: this.state.sections,
       search: this.state.search,
       searchOn: true,
       error: this.state.error,
       addItem: this.addItem,
+      editItem: this.editItem,
       deleteItem: this.deleteItem,
-      setSearch: this.setSearch,
-      setSort: this.sort,
-      resetAppState: this.resetAppState,
+      setCurrentItemId: this.setCurrentItemId,
       updateForOptions: this.updateForOptions,
       getForStandard: this.getForStandard,
     }
@@ -197,6 +199,10 @@ class App extends Component {
     return (
       <ApiContext.Provider value={value}>
         <div className='App'>
+          <nav className='App__nav'>
+            {this.renderNavRoutes()}
+          </nav>
+          
           <header className="App__header">
             <h1>
               <Link to='/'>Check the Fridge</Link>
@@ -209,7 +215,7 @@ class App extends Component {
             </main>
           </ErrorPage>
 
-          <footer>
+          <footer className='App__footer'>
             Created by <a href='https://shiningjustice.github.io'>Phoebe Law</a>
           </footer>
         </div>        

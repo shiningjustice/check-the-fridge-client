@@ -101,7 +101,7 @@ export default class Options extends Component {
 		this.context.updateForOptions(search, filteredFolders, sort);
 	}
 	handleReset = () => {
-		//reset App, Options, and Checkbox states
+		//reset App, Options, and Checkbox states and does default get call
 		this.context.resetAppState()
 		this.setState({
 			search: '',
@@ -110,7 +110,6 @@ export default class Options extends Component {
 			// filteredFolders: checkboxSections,
 			sort: ''
 		})
-		this.context.getForStandard()
 	}
 
 

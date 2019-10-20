@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import config from '../config';
 import ApiContext from '../ApiContext';
@@ -32,12 +33,6 @@ export default class FridgeItem extends Component {
       })
   }
 
-  componentDidMount() {
-    this.setState({
-      amount: this.props.currQuantity
-    })
-  }
-
   updateCurrQuantity = amount => {
     const newQuantity = this.props.currQuantity + amount;
     const item = {currQuantity: newQuantity};
@@ -60,6 +55,12 @@ export default class FridgeItem extends Component {
       .catch(error => {
         console.error(error)
       })
+  }
+
+  componentDidMount() {
+    this.setState({
+      amount: this.props.currQuantity
+    })
   }
 
   render() {
@@ -87,6 +88,9 @@ export default class FridgeItem extends Component {
 
         {/* delete button */}
         <button className='FridgeItem__button' onClick={() => this.deleteItem(this.props.id)}>Delete</button>
+        
+        {/* edit button */}
+        <Link to='/edit-item/:itemId'><button className='FridgeItem__button'>Edit</button></Link>
       </>
     )
   }

@@ -1,9 +1,14 @@
 import React, { Component } from "react";
 import FridgeSection from "../FridgeSection/FridgeSection";
 import ApiContext from "../ApiContext";
+import EditItem from '../EditItem/EditItem';
 
 export default class Fridge extends Component {
 	static contextType = ApiContext;
+
+	state = {
+		editItem: 'hidden',
+	}
 
 	render() {
 		const { sections=[] }= this.context;
@@ -41,10 +46,10 @@ export default class Fridge extends Component {
 							<FridgeSection
 								id={section.id}
 								name={section.name}
-								items={section.items}
 							/>
 						</div>
 					)}
+					<EditItem className='hidden' />
 				</div>
 			</>
 		);
