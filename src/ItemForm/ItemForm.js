@@ -70,7 +70,7 @@ export default class ItemForm extends Component {
 		// });
   };
   
-  handleSubmit = e => {
+  handleAddSubmit = e => {
 		e.preventDefault();
 
 		this.validateOnSubmit();
@@ -113,12 +113,25 @@ export default class ItemForm extends Component {
     const { sections = [] } = this.context;
     const { formName, formVerb } = this.props;
 
+		const { item } = this.props;
+		
+		console.log(item.id)
+    // const name = item.name;
+    // const sectionId = item.sectionId;
+    // const quantity = item.quantity;
+    // const note = item.note;
+
+		console.log(item)
+		
     return (
 			<section className={formName}>
-				<h2>Add New Item</h2>
+				<h2>{formVerb} Item</h2>
 				<form 
 					className={`${formName}__form`}
-					onSubmit={e => this.handleSubmit(e)}
+          onSubmit={(formName === 'Add')
+            ? e => this.handleAddSubmit(e)
+            : e => this.handleEditSubmit(e)
+          }
 				>
 					<div className={`${formName}__error`} role='alert'>
             {error && <p>{error.message}</p>}
@@ -136,7 +149,8 @@ export default class ItemForm extends Component {
 						<input
 							type='text'
 							name='name'
-							id='name'
+              id='name'
+              // defaultValue={name && name}
 							value={this.state.name.value}
 							onChange={e => this.handleInputChange(e)}
 							required
@@ -156,7 +170,7 @@ export default class ItemForm extends Component {
 							onChange={e => this.handleInputChange(e)}
 							required
 						>
-							<option value=''>Select a section</option>
+							<option value=''>Select one</option>
 							{sections.map(section => (
 								<option key={section.id} value={section.id}>
 									{section.name}
@@ -194,7 +208,8 @@ export default class ItemForm extends Component {
 
 					<div className={`${formName}__buttonContainer`}>
             <button onClick={this.handleClickCancel}>Cancel</button>
-            <button type='submit'>{`${formVerb} Item`}</button>
+            {' '}
+            <button type='submit'>{`Save`}</button>
 					</div>
 				</form>
 			</section>

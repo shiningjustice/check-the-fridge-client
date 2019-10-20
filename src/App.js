@@ -169,7 +169,7 @@ class App extends Component {
         <Route exact path='/' component={HomeMain} />
         <Route path='/dashboard' component={ListViewMain} />
         <Route path='/add-item' component={AddItem} />
-        <Route path='/edit-item/:itemId' component={EditItem} />
+        <Route path='/edit-item/:id' component={EditItem} />
         {/* <Route path='/edit-item/:itemId' component={EditItem} /> */}
       </>
     );
@@ -185,6 +185,7 @@ class App extends Component {
       state: this.state,
       items: this.state.items,
       sections: this.state.sections,
+      currentItemId: this.state.currentItemId,
       search: this.state.search,
       searchOn: true,
       error: this.state.error,

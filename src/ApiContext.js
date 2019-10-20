@@ -4,6 +4,7 @@ export default React.createContext({
   items: [], 
   sections: [],
   search: '', 
+  currentItemId: '',
   filteredFolders: [], 
   sort: '', 
   searchOn: false, 

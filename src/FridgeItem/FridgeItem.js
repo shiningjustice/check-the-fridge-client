@@ -64,7 +64,7 @@ export default class FridgeItem extends Component {
   }
 
   render() {
-    const { name, initQuantity, currQuantity, dateAdded, note } = this.props;
+    const { name, initQuantity, currQuantity, dateAdded, note, id } = this.props;
     return (
       <>
         <h4>{name}</h4>
@@ -90,7 +90,7 @@ export default class FridgeItem extends Component {
         <button className='FridgeItem__button' onClick={() => this.deleteItem(this.props.id)}>Delete</button>
         
         {/* edit button */}
-        <Link to='/edit-item/:itemId'><button className='FridgeItem__button'>Edit</button></Link>
+        <Link to={`/edit-item/${id}`}><button className='FridgeItem__button'>Edit</button></Link>
       </>
     )
   }
