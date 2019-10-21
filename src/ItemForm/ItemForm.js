@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import config from '../config';
 import ApiContext from '../ApiContext';
@@ -16,18 +16,21 @@ export default class ItemForm extends Component {
 
   state = {
 		error: null,
+		id: '',
 		name: '', 
 		sectionId: '',
+		dateAdded: moment().format('YYYY-MM-DD'),
 		quantity: '',
 		note: '',
   };
   
   handleInputChange = e => {
-		const target = e.target;
-		const value = target.type === 'checkbox' ? target.checked : target.value;
-		const name = target.name;
+		let value = e.target.value;
+		let name = e.target.name;
 
-		console.log(name, value)
+		//if the section is supposed to be a type===number then make sure it is
+		(name === 'sectionId') && (value = +value)
+		
 		this.setState({
 			[name]: value
 		});
@@ -38,6 +41,7 @@ export default class ItemForm extends Component {
 			error: null,
 			name: '', 
 			sectionId: '',
+			dateAdded: moment().format('YYYY-MM-DD'),
 			quantity: '',
       note: '',
       missingFields: [],
@@ -70,20 +74,28 @@ export default class ItemForm extends Component {
 		// });
   };
   
-  handleAddSubmit = e => {
+  handleSubmit = (e) => {
 		e.preventDefault();
 
 		this.validateOnSubmit();
 
 		const item = {
 			name: this.state.name,
-			sectionId: this.state.sectionId,
-			quantity: this.state.quantity,
-			note: this.state.note
+			sectionId: +this.state.sectionId,
+			dateAdded: moment(this.state.dateAdded).format(),
+			currQuantity: +this.state.quantity,
+			note: this.state.note,
+			id: this.state.id
 		};
-		console.log(item)
+
 		this.setState({ error: null });
 
+		//Format fetch call based on form
+		this.props.formName === 'AddItem' ? this.handlePost(item) : this.handlePatch(item);
+		
+	};
+
+	handlePost = item => {
 		fetch(`${config.API_ENDPOINT}/items`, {
 			method: "POST",
 			body: JSON.stringify(item),
@@ -99,37 +111,77 @@ export default class ItemForm extends Component {
       })
 			.then(data => {
 				this.resetState();
-				this.props.formName === 'addItem' ? this.context.addItem(data) : this.context.editItem(data)
+				this.context.addItem(data)
 				this.props.history.push('/dashboard');
 			})
 			.catch(error => {
 				console.error(error);
 				this.setState({ error });
 			});
+	}
+
+	handlePatch = item => {
+		fetch(`${config.API_ENDPOINT}/items/${this.state.id}`, {
+			method: "PATCH",
+			body: JSON.stringify(item),
+			headers: {
+				"content-type": "application/json"
+			},
+		})
+			.then(res => {
+				if (!res.ok) {
+					return res.json().then(e => Promise.reject(e));
+				}
+				return res;
+      })
+			.then(() => {
+				this.resetState();
+				this.context.editItem(item)
+				this.props.history.push('/dashboard');
+			})
+			.catch(error => {
+				console.error(error);
+				this.setState({ error });
+			});
+	}
+
+	componentDidMount = () => {
+		const { item } = this.props;
+
+		if (item) {
+			this.setState({
+				id: item.id,
+				name: item.name, 
+				sectionId: item.sectionId,
+				dateAdded: moment(item.dateAdded).format('YYYY-MM-DD'),
+				quantity: item.currQuantity,
+				note: item.note,
+			})
+		}
   };
-  
+
   render() {
     const { error } = this.state;
     const { sections = [] } = this.context;
-    const { formName, formVerb } = this.props;
-
-		const { item } = this.props;
+		const { formName } = this.props;
+		// const { item } = this.props;
 		
-		console.log(item)
-    const name = item.name;
-    const sectionId = item.sectionId;
-    const quantity = item.currQuantity;
-    const note = item.note;
+		// let name; let sectionId; let dateAdded; let quantity; let note;
+		
+		// if (item) {
+		// 	name = item.name;
+		// 	sectionId = item.sectionId;
+		// 	dateAdded = item.dateAdded;
+		// 	quantity = item.currQuantity;
+		// 	note = item.note;
+		// }
 		
     return (
 			<section className={formName}>
-				<h2>{formVerb} Item</h2>
+				<h2>{this.props.formName === 'AddItem' ? 'Add' : 'Edit'} Item</h2>
 				<form 
 					className={`${formName}__form`}
-          onSubmit={(formName === 'Add')
-            ? e => this.handleAddSubmit(e)
-            : e => this.handleEditSubmit(e)
-          }
+          onSubmit={(e) => this.handleSubmit(e)}
 				>
 					<div className={`${formName}__error`} role='alert'>
             {error && <p>{error.message}</p>}
@@ -148,8 +200,8 @@ export default class ItemForm extends Component {
 							type='text'
 							name='name'
               id='name'
-              defaultValue={name && name}
-							value={this.state.name.value}
+              defaultValue={this.state.name}
+							// value={this.state.name.value}
 							onChange={e => this.handleInputChange(e)}
 							required
 						></input>
@@ -164,20 +216,39 @@ export default class ItemForm extends Component {
 						<select
 							name='sectionId'
 							id='sectionId'
-							defaultValue={sectionId && sectionId}
-							value={this.state.sectionId.value}
+							defaultValue={this.state.sectionId}
+							// value={this.state.sectionId.value}
 							onChange={e => this.handleInputChange(e)}
 							required
 						>
 							<option value=''>Select one</option>
-							{sections.map(section => (
-								<option key={section.id} value={section.id}>
+							{sections.map(section => {
+								return (
+									<option type='number' key={Number(section.id)} value={Number(section.id)}>
 									{section.name}
-								</option>
-							))}
+									</option>
+								)
+							})}
 						</select>
 					</div>
 					
+					<div>
+						<label htmlFor='dateAdded'>
+							Date Added
+							<Required />
+						</label>
+						{' '}
+						<input 
+							type='date'
+							name='dateAdded'
+							id='dateAdded'
+							defaultValue={this.state.dateAdded}
+							// value={this.state.dateAdded.value}
+							onChange={e => this.handleInputChange(e)}
+							required
+						/>
+					</div>
+
 					<div>
 						<label htmlFor='quantity'>
               Quantity
@@ -188,8 +259,8 @@ export default class ItemForm extends Component {
 							type='number'
 							name='quantity'
 							id='quantity'
-							defaultValue={quantity && quantity}
-							value={this.state.quantity.value}
+							defaultValue={this.state.quantity}
+							// value={this.state.quantity.value}
 							onChange={e => this.handleInputChange(e)}
 							required
 						></input>
@@ -202,8 +273,8 @@ export default class ItemForm extends Component {
 							type='text'
 							name='note'
 							id='note'
-							defaultValue={note && note}
-							value={this.state.note.value}
+							defaultValue={this.state.note}
+							// value={this.state.note.value}
 							onChange={e => this.handleInputChange(e)}
 						></textarea>
 					</div>

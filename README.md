@@ -3,7 +3,7 @@
 ## Notes for Phoebe
 * it's breaking.... editItem line 16. it wants props at all times for some reason. gotta disable this somehow if we're not on the edit page. if you got to like edit-item/2 it'll work but yeah
 
-* I think the results stuff is good, except for how to pass the params/ how to get the server to render the right stuff. 
+* I think the results stuff is good, except for how to pass the params/ how to get the server to render the right snpm tuff. 
 
 * set up tests 
 

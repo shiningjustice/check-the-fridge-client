@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
+import moment from 'moment';
 
 import HomeMain from './HomeMain/HomeMain';
 import HomeNav from './HomeNav/HomeNav';
@@ -124,17 +125,23 @@ class App extends Component {
       .catch(error => console.error({ error }))
   }
 
-  addItem = item => {
+  addItem = newitem => {
     this.setState({
-      items: [...this.state.items, item]
+      items: [...this.state.items, newitem]
     })
   }
 
-  editItem = item => {
-    //create an array of the items, minus the edited item
-    let newItems = this.state.items.filter(i => i.id !== item.id);
-    //add the edited item in its original place
-    newItems.splice((item.id-1), 0, item)
+  editItem = editedItem => {
+    //find the ID of the item being updated
+    const index = this.state.items.findIndex(item => item.id === editedItem.id)
+    
+    console.log(editedItem, index)
+    
+    //splice the older version and replace it with the new one 
+    let newItems = this.state.items;
+    newItems.splice(index, 1, editedItem);
+
+    console.log(newItems)
 
     this.setState({
       items: newItems
@@ -196,6 +203,8 @@ class App extends Component {
       updateForOptions: this.updateForOptions,
       getForStandard: this.getForStandard,
     }
+
+    console.log(moment().format())
     return (
       <ApiContext.Provider value={value}>
         <div className='App'>
