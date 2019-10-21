@@ -4,8 +4,9 @@ import moment from 'moment';
 
 import HomeMain from './HomeMain/HomeMain';
 import HomeNav from './HomeNav/HomeNav';
-import ListViewMain from './ListViewMain/ListViewMain';
-import ListViewNav from './ListViewNav/ListViewNav';
+import DemoMain from './DemoMain/DemoMain';
+import DemoSubNav from './DemoSubNav/DemoSubNav';
+import DemoNav from './DemoNav/DemoNav';
 import AddItem from './AddItem/AddItem';
 import EditItem from './EditItem/EditItem';
 import config from './config';
@@ -161,12 +162,16 @@ class App extends Component {
     })
   }
 
+  renderSubNavRoutes() {
+    return (
+      <Route exact path='/demo' component={DemoSubNav} />
+    )
+  }
   renderNavRoutes() {
     return (
       <>
         <Route exact path='/' component={HomeNav} />
-        <Route path='/dashboard' component={ListViewNav} />
-        <Route path='/add-item' component={ListViewNav} />
+        <Route path='/demo' component={DemoNav} />
       </>
     )
   }
@@ -174,10 +179,9 @@ class App extends Component {
     return (
       <>
         <Route exact path='/' component={HomeMain} />
-        <Route path='/dashboard' component={ListViewMain} />
-        <Route path='/add-item' component={AddItem} />
-        <Route path='/edit-item/:id' component={EditItem} />
-        {/* <Route path='/edit-item/:itemId' component={EditItem} /> */}
+        <Route exact path='/demo' component={DemoMain} />
+        <Route path='/demo/add-item' component={AddItem} />
+        <Route path='/demo/edit-item/:id' component={EditItem} />
       </>
     );
   }
@@ -204,12 +208,12 @@ class App extends Component {
       getForStandard: this.getForStandard,
     }
 
-    console.log(moment().format())
     return (
       <ApiContext.Provider value={value}>
         <div className='App'>
           <nav className='App__nav'>
-            {this.renderNavRoutes()}
+            {this.renderNavRoutes()}{' '}
+            {this.renderSubNavRoutes()}
           </nav>
           
           <header className="App__header">

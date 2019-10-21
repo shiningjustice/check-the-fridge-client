@@ -61,11 +61,6 @@ export default class Options extends Component {
 		return (
 			<div className='Options__div'>
 
-				{/* Add Item Button */}
-				<Link to='/add-item'>
-					<button className='Options__button'>Add Item</button>
-				</Link>
-
 				{/* All Options */}
 				{/* Search bar (not functional) */}
 				<form className='Options__form' onSubmit={e => this.handleSubmit(e)}>

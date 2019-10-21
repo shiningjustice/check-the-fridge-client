@@ -50,7 +50,7 @@ export default class ItemForm extends Component {
 
   handleClickCancel = () => {
 		this.resetState();
-		this.props.history.push('/dashboard');
+		this.props.history.push('/demo');
   };
 
   addMissingField = field => {
@@ -112,7 +112,7 @@ export default class ItemForm extends Component {
 			.then(data => {
 				this.resetState();
 				this.context.addItem(data)
-				this.props.history.push('/dashboard');
+				this.props.history.push('/demo');
 			})
 			.catch(error => {
 				console.error(error);
@@ -137,7 +137,7 @@ export default class ItemForm extends Component {
 			.then(() => {
 				this.resetState();
 				this.context.editItem(item)
-				this.props.history.push('/dashboard');
+				this.props.history.push('/demo');
 			})
 			.catch(error => {
 				console.error(error);
