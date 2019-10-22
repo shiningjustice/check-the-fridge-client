@@ -1,0 +1,54 @@
+.App {
+  position: relative;
+  min-height: 100vh;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.App___sansFooter {
+  padding-bottom: 3.5rem;
+}
+
+.App__nav {
+  padding: .5rem;
+  display: flex;
+  justify-content: flex-end;
+  background: lightgray;
+}
+
+nav>a {
+  text-decoration: none;
+}
+
+main {
+  margin: 0 1rem;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.App__footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  background: grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Other App-wide Stylings */
+
+span.italic {
+  font-style: italic;
+}
