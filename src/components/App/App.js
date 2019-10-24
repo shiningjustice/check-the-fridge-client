@@ -32,7 +32,6 @@ class App extends Component {
 
   toggleShowModal = boolean => {
     this.setState({ showModal: boolean })
-    console.log(boolean, this.state.showModal)
   }
 
   formatQueryParams = params => {
@@ -50,8 +49,6 @@ class App extends Component {
   }
 
   updateFor = (search, filteredFolders, sort) => {
-    console.log('App.js: UFO: updateForOptions ran' )
-    console.log(`App.js: UFO: search = ${search} and filteredFolders = ${filteredFolders} and sort = ${sort}`)
     let params = {};
 
     //If search options are passed into option X, then set params.X
@@ -62,18 +59,15 @@ class App extends Component {
     let queryString = this.formatQueryParams(params);
 
     const url = `${config.API_ENDPOINT}/results?${queryString}`
-    console.log('App.js: UFO: ' + url)
 
     fetch(url)
       .then(itemsRes => {
-        console.log('App.js: UFO: FETCH CALL RAN')
         if (!itemsRes.ok)
           return itemsRes.json().then(e => Promise.reject(e));
 
         return itemsRes.json()
       })
       .then((items) => {
-        console.log(items);
         let newSections; 
 
         //Handle display of sections in fridge and checkboxes
@@ -90,7 +84,6 @@ class App extends Component {
         else  {
           newSections = this.state.sections.filter(section => this.state.items.find(item => section.id === item.sectionId))
         }
-        console.log(filteredFolders, typeof(filteredFolders), {newSections})
         
         this.setState({
           items,
@@ -113,9 +106,22 @@ class App extends Component {
       error: null,
     })
 
+    console.log(config)
+
     Promise.all([
-      fetch(`${config.API_ENDPOINT}/items`),
-      fetch(`${config.API_ENDPOINT}/sections`),
+      fetch(`${config.API_ENDPOINT}/items`, { 
+        method: 'GET',
+        headers: {
+          "Authorization": `${config.API_TOKEN}`,
+          "Content-type": "application/json"
+        }, 
+      }),
+      fetch(`${config.API_ENDPOINT}/sections`, { 
+        headers: {
+          "Authorization": `${config.API_TOKEN}`,
+          "Content-type": "application/json"
+        }
+      }),
     ])
       .then(([itemsRes, sectionsRes]) => {
         if (!itemsRes.ok)

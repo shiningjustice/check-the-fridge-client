@@ -20,8 +20,9 @@ export default class FridgeItem extends Component {
     fetch(config.API_ENDPOINT + `/items/${itemId}`, {
       method: 'DELETE',
       headers: {
-        "content-type": "application/json"
-      }
+        "Authorization": `${config.API_TOKEN}`,
+        "Content-type": "application/json"
+      }, 
     })
       .then( res => {
         if (!res.ok){
@@ -46,7 +47,8 @@ export default class FridgeItem extends Component {
       method: 'PATCH',
       body: JSON.stringify(item),
       headers: {
-        'content-type': 'application/json'
+        "Authorization": `${config.API_TOKEN}`,
+        "Content-type": "application/json"
       }
     })
       .then(res => {
@@ -86,7 +88,6 @@ export default class FridgeItem extends Component {
     const plusIcon = <FontAwesomeIcon icon={faPlus} />;
     const minusIcon = <FontAwesomeIcon icon={faMinus} />;
 
-    console.log(this.props.item)
     return (
       <li className='FridgeItem__li mainContainer'>
         

@@ -14,7 +14,8 @@ export default class Modal extends Component {
       method: 'POST',
       body: JSON.stringify(signup),
       headers: {
-        'content-type': 'application/json'
+        "Authorization": `${config.API_TOKEN}`,
+        "Content-type": "application/json"
       }
     })
       .then(res => {

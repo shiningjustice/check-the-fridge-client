@@ -97,7 +97,8 @@ export default class ItemForm extends Component {
 			method: "POST",
 			body: JSON.stringify(item),
 			headers: {
-				"content-type": "application/json"
+				"Authorization": `${config.API_TOKEN}`,
+				"Content-type": "application/json"
 			},
 		})
 			.then(res => {
@@ -122,7 +123,8 @@ export default class ItemForm extends Component {
 			method: "PATCH",
 			body: JSON.stringify(item),
 			headers: {
-				"content-type": "application/json"
+				"Authorization": `${config.API_TOKEN}`,
+				"Content-type": "application/json"
 			},
 		})
 			.then(res => {
