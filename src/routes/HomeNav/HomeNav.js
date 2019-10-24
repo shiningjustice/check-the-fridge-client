@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './HomeNav.css'
+
 const HomeNav = (props) => {
   return (
-    // <Link to='/sign-up' className='ListViewNav__Link'>Sign Up</Link>
-    <Link to='/demo' className='ListViewNav__Link'>App Demo</Link>
-    // <Link to='/faq' className='ListViewNav__Link'>FAQ</Link>
+    <div className='HomeNav__div mainContainer'>
+      <div className='HomeNav__div signup psuedoButton' onClick={() => props.toggleShow(true)}>Sign Up</div>
+      <Link to='/demo' className='HomeNav__Link'>App Demo</Link>
+      {/* <Link to='/faq' className='HomeNav__Link'>FAQ</Link> */}
+    </div>
   )
 }
 

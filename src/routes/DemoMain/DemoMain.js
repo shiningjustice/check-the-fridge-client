@@ -11,9 +11,7 @@ export default class DemoMain extends Component {
 	render() {
 		return (
 			<main className='DemoMain__main'>
-				<Options 
-					parent={'demoMain'}
-				/>
+				<Options parent='DemoMain'/>
 
 				<Fridge />
 			</main>

@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import HomeMain from '../../routes/HomeMain/HomeMain';
+import Modal from '../Modal/Modal';
+
 import HomeNav from '../../routes/HomeNav/HomeNav';
 import DemoMain from '../../routes/DemoMain/DemoMain';
-import DemoSubNav from '../../routes/DemoSubNav/DemoSubNav';
 import DemoNav from '../../routes/DemoNav/DemoNav';
+import DemoBanner from '../../routes/DemoBanner/DemoBanner';
 import AddItem from '../../routes/AddItem/AddItem';
 import EditItem from '../../routes/EditItem/EditItem';
 import config from '../../config';
 import ApiContext from '../../contexts/ApiContext';
-
 import ErrorPage from '../ErrorPage';
+import HomeMain from '../../routes/HomeMain/HomeMain';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 
 class App extends Component {
@@ -24,6 +27,12 @@ class App extends Component {
     searchOn: true,
     currentItemId: '',
     error: null,
+    showModal: false,
+  }
+
+  toggleShowModal = boolean => {
+    this.setState({ showModal: boolean })
+    console.log(boolean, this.state.showModal)
   }
 
   formatQueryParams = params => {
@@ -72,16 +81,13 @@ class App extends Component {
         //filteredFolders is an array with items
         //using length instead of truthy because is sent in as an array, whose value is truthy
         if (filteredFolders.length > 0) {
-          console.log('you rang')
           newSections = this.state.sections.filter(section =>  filteredFolders.indexOf(section.id) !== -1)
         } //filteredFolders is a string
         //using length instead of truthy because is sent in as an array, whose value is truthy
         else if (filteredFolders.length > 0 && typeof(sort) !== 'object') {
-          console.log('actually here')
           newSections = filteredFolders
         } //filteredFolders doesn't have any items in it/is falsy
         else  {
-          console.log('here')
           newSections = this.state.sections.filter(section => this.state.items.find(item => section.id === item.sectionId))
         }
         console.log(filteredFolders, typeof(filteredFolders), {newSections})
@@ -132,16 +138,16 @@ class App extends Component {
   }
 
   editItem = editedItem => {
+    //change 'quantity' to curQuantity
+    editedItem.currQuantity = editedItem.quantity;
+    delete editedItem.quantity;
+    
     //find the ID of the item being updated
     const index = this.state.items.findIndex(item => item.id === editedItem.id)
-    
-    console.log(editedItem, index)
     
     //splice the older version and replace it with the new one 
     let newItems = this.state.items;
     newItems.splice(index, 1, editedItem);
-
-    console.log(newItems)
 
     this.setState({
       items: newItems
@@ -161,15 +167,10 @@ class App extends Component {
     })
   }
 
-  renderSubNavRoutes() {
-    return (
-      <Route exact path='/demo' component={DemoSubNav} />
-    )
-  }
   renderNavRoutes() {
     return (
       <>
-        <Route exact path='/' component={HomeNav} />
+        <Route exact path='/' component={() => <HomeNav toggleShow={this.toggleShowModal} />}/>
         <Route path='/demo' component={DemoNav} />
       </>
     )
@@ -205,7 +206,9 @@ class App extends Component {
       setCurrentItemId: this.setCurrentItemId,
       updateForOptions: this.updateForOptions,
       getForStandard: this.getForStandard,
+      showModal: this.showModal,
     }
+    const closeIcon = <FontAwesomeIcon icon={faTimes} />
 
     return (
       <ApiContext.Provider value={value}>
@@ -213,7 +216,7 @@ class App extends Component {
           <div className='App___sansFooter beans'>
             <nav className='App__nav'>
               {this.renderNavRoutes()}{' '}
-              {this.renderSubNavRoutes()}
+              <Route path='/demo' component={() => <DemoBanner toggleShow={this.toggleShowModal} />} />
             </nav>
 
             <ErrorPage>
@@ -221,12 +224,13 @@ class App extends Component {
                 {this.renderMainRoutes()}
               </main>
             </ErrorPage>
+            <Modal show={this.state.showModal} closeIcon={closeIcon} toggleShow={this.toggleShowModal}/>    
           </div>
 
           <footer className='App__footer'>
             <p className='footer__p'>Created by <a href='https://shiningjustice.github.io'>Phoebe Law</a></p>
           </footer>
-        </div>        
+        </div>     
       </ApiContext.Provider>
     )
   }

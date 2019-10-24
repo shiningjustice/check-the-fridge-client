@@ -1,3 +1,38 @@
 .DemoMain__main {
   margin: 0;
+  padding-top: 3rem;
+}
+
+li {
+  border-image-outset: 5px;
+}
+
+.Options__form.DemoMain {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .DemoMain__main {
+    padding-top: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .DemoMain__main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 2rem 3.5rem 3rem;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .Fridge__div.mainContainer {
+    width: 75%;
+  }
+  .Options__form.DemoMain {
+    display: inherit;
+    width: 30%;
+  }
 }

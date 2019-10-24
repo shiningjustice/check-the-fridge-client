@@ -1,0 +1,11 @@
+.Checkboxes__div.checkboxes {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.Checkboxes__label {
+  font-size: 1.1rem;
+}

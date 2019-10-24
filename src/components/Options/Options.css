@@ -1,21 +1,39 @@
 .Options__form {
-  width: 100%;
-}
-.Options__form > div {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  flex-basis: 1;
+  width: 100%;
 }
 
-.Options__h3 {
+.SearchBar__div.mainContainer {
+  padding-left: .5rem;
+  align-self: flex-start;
+}
+
+.SearchBar__input {
+  height: 100%;
+}
+
+.Options__h3{
   margin: 0;
+  padding-left: 3rem;
 }
 
-.Options___sortFilter {
+.Options__div.h3Container {
+  display: flex;
+  flex-direction: row;
+}
+
+.Options__div.componentsContainer {
+  height: 50%;
+  width: 100%;
+  position: static;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  overflow: auto;
 }
 
 .Checkboxes__div.mainContainer {
@@ -33,47 +51,109 @@
 }
 
 .Options__button {
-  background: white;
-  outline: 1pt solid black;
-  padding: 3px 5px;
+  padding: 3px 6px 6px;
   border-style: none;
+  border: 1pt solid black;
 }
 
 .hidden {
   display: none;
 }
 
-.demoMain {
+.DemoMain {
   display: none;
 }
 
-/* after demo main */
-
-
-/* .Search__div.mainContainer {
-  margin: .5rem;
-} */
-
-/* .h3___button {
-  border: 1pt solid black;
-  background-color: white;
-  padding: 10px 25px;
-  margin: .5rem 0rem;
+.Options__button {
+  margin: 1.5rem .25rem;
 }
 
-.Options__div.components__container{
-  text-align: center;
-  margin: .5rem;
+@media screen and (min-width: 1024px) {
+  .Options__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 1;
+    height: 450px;
+    background-color: grey;
+    border-radius: 3px;
+    margin: 7.5rem 2rem 0;
+    padding: 10px;
+    position: sticky;
+    top: 8.5rem;
+  }
+
+  .Options__form > * {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .DemoNav {
+    display: none;
+  }
+
+  .DemoMain {
+    display: inherit;
+  }
+
+  .SearchBar__div.mainContainer {
+    display: block;
+    width: 240px;
+    padding: 0;
+  }
+  
+  .SearchBar__input {
+    height: inherit;
+    width: 100%;
+  }
+
+  .Options__div.componentsContainer {
+    height: 100%;
+    width: 240px;
+    padding: .5rem 0 0 0;
+    display: inline-block;
+    flex-direction: column;
+    justify-content: space-evenly;
+    overflow: auto;
+  }
+
+  .Options__div.componentsContainer > * {
+    width: 240px;
+  }
+
+  .Options__h3, .SearchBar__h3 {
+    margin: .4rem 0 0;
+    padding: 0 0;
+  }
+
+  .Options__h4 {
+    margin: .5rem 0;
+    text-align: center;
+  }
+
+  .Options__select {
+    width: 100%;
+  }
+
+  .Checkboxes__div.checkboxContainer {
+    height: 160px;
+  }
+  .Checkboxes__div.checkboxes {
+    padding: 0 0 0 10px;
+    width: 50%;
+  }
+
+  .Checkboxes__label {
+    font-size: 1rem;
+  }
+
+  .Checkboxes__input {
+    margin: 0 .5rem 0 0;
+  }
+
+  .Option__select {
+    width: 100%;
+  }
+
 }
-
-.Options__label {
-  margin: 5px 0;
-}
-
-
-.div__mainContainer {
-  background: grey;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-} */

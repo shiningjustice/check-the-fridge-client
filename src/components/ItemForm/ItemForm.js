@@ -57,7 +57,7 @@ export default class ItemForm extends Component {
   }
 
   validateOnSubmit = () => {
-		const requiredFields = ['name', 'sectionId', 'quantity'];
+		const requiredFields = ['name', 'dateAdded','sectionId', 'quantity'];
 
     for (let i = 0; i > requiredFields.length; i++) {
       if (!requiredFields[i]) {
@@ -175,7 +175,7 @@ export default class ItemForm extends Component {
 		// }
 		
     return (
-			<section className={formName}>
+			<section className={`${formName}__section mainContainer`}>
 				<h2>{this.props.formName === 'AddItem' ? 'Add' : 'Edit'} Item</h2>
 				<form 
 					className={`${formName}__form`}
@@ -215,8 +215,8 @@ export default class ItemForm extends Component {
 							name='sectionId'
 							id='sectionId'
 							value={this.state.sectionId}
-							// value={this.state.sectionId.value}
 							onChange={e => this.handleInputChange(e)}
+							className={`${formName}__select`}
 							required
 						>
 							<option value=''>Select one</option>
@@ -275,6 +275,7 @@ export default class ItemForm extends Component {
 							defaultValue={this.state.note}
 							// value={this.state.note.value}
 							onChange={e => this.handleInputChange(e)}
+							className={`${formName}__textarea`}
 						></textarea>
 					</div>
 

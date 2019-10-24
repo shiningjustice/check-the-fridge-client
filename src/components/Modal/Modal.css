@@ -1,0 +1,41 @@
+.Modal__div.mainContainer {
+  position: fixed;
+  top: 10%; left: 10%;
+  padding: .7rem;
+  background: #4C9FC6;
+  border: dashed 1pt black;
+  width: 80%;
+  box-shadow: -15px 15px 2px 1px gainsboro ;
+  border-radius: 5px;
+}
+
+.Modal__header {
+  display: flex;
+  align-self: flex-start;
+}
+
+.Modal__button.close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+}
+
+.Modal__div > h3 {
+  margin-top: 0;
+}
+
+.Modal__div.inputs {
+  margin-bottom: .5rem;
+}
+
+.Modal__div.inputAndLabel {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: .5rem;
+}
+
+.Modal__input {
+  margin-left: .5rem;
+  width: 60%;
+}

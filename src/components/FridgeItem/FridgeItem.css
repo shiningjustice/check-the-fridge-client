@@ -1,0 +1,132 @@
+.notMobile {
+  display: none;
+}
+
+.FridgeItem__div.mainContainer > * {
+  display: flex;
+}
+
+.FridgeItem__li.mainContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: .5rem 0;
+}
+
+.FridgeItem__div.addSubtractContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0 .5rem 0 0;
+}
+
+.FridgeItem__button.addSubtract {
+  font-size: 1.5ch;
+}
+
+.FridgeItem__button.disabled {
+  color: lightgray;
+}
+
+.age_good {
+  background: #87A17A;
+}
+
+.age_okay {
+  background: #FEB968;
+}
+
+.age_bad {
+  background: #E57874;
+}
+
+.FridgeItem__div.sansAddSubtractButtons {
+  width: 85%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: .2rem .4rem .4rem .4rem;
+  border-radius: 5px;
+}
+
+.FridgeItem__div.topRow {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+.FridgeItem__div.deleteEditContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.FridgeItem__button.deleteEdit {
+  padding: .5rem .3rem 0;
+  margin: .1rem;
+}
+
+.FridgeItem__h4 {
+  color: #FEF7EC;
+  font-size: 2ch;
+  margin: 0;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.FridgeItem__ul.bottomRow {
+  display: flex;
+}
+
+.FridgeItem__ul.sansNote {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.FridgeItem__ul.sansNote > * {
+  width: 100%;
+  text-align: left;
+}
+
+.FridgeItem__ul.sansNote > * > * {
+  display: inline;
+}
+
+.FridgeItem__li.note {
+  width: 40%;
+  text-align: left;
+}
+
+.FridgeItem__button {
+  outline: none;
+  background: none;
+}
+
+@media screen and (min-width: 768px) {
+  /* .mobile {
+    display: none;
+  } */
+
+  .notMobile {
+    display: inherit;
+  }
+
+  .FridgeItem__li.mainContainer {
+    justify-content: center;
+  }
+
+  .FridgeItem__button.deleteEdit {
+    padding: .2rem .5rem 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .FridgeItem__div.sansAddSubtractButtons {
+    width: 95%;
+  }
+}

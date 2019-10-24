@@ -1,0 +1,19 @@
+.HomeNav__div.mainContainer {
+  padding: 0.6rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-content: center;
+  background-color: #B8ADC8;
+}
+
+.HomeNav__div.mainContainer > * {
+  color: black;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0 .5rem;
+}
+
+.HomeNav__button {
+  outline: none;
+}

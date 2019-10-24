@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 
 import config from '../../config';
 import ApiContext from '../../contexts/ApiContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faEdit, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+
+import './FridgeItem.css'
 
 export default class FridgeItem extends Component {
   static contextType = ApiContext;
@@ -35,7 +39,7 @@ export default class FridgeItem extends Component {
 
   updateCurrQuantity = amount => {
     const newQuantity = this.props.currQuantity + amount;
-    const item = {currQuantity: newQuantity};
+    const item = {quantity: newQuantity};
     
     fetch(`${config.API_ENDPOINT}/items/${this.props.id}`, {
       method: 'PATCH',
@@ -65,33 +69,58 @@ export default class FridgeItem extends Component {
 
   render() {
     const { name, initQuantity, currQuantity, dateAdded, note, id } = this.props;
+    const deleteIcon = <FontAwesomeIcon icon={faTrash} />;
+    const editIcon = <FontAwesomeIcon icon={faEdit} />;
+    const plusIcon = <FontAwesomeIcon icon={faPlus} />;
+    const minusIcon = <FontAwesomeIcon icon={faMinus} />;
+
     return (
-      <>
-        <h4>{name}</h4>
-        <ul className='FridgeItem__ul'>
-          <li>
-            <span className='FridgeItem__info'>Amount:</span> {this.state.amount || currQuantity}
-          </li>
-          <li>
-            <span className='FridgeItem__info'>Added:</span> {dateAdded}
-          </li>
-          {note && <li>
-            <span className='FridgeItem__info'>Note:</span> {note}
-          </li>}
-        </ul>
-
-        {/* if there's more than one item left, have the decrement button show up */}
-        {(this.state.amount > 1) && <button className='FridgeItem__button' onClick={() => this.updateCurrQuantity(-1)}>-</button>}
-
-        {/* if the current amount is less than the original amount, let an increment button show up */}
-        {(this.state.amount < initQuantity) && <button className='FridgeItem__button' onClick={() => this.updateCurrQuantity(1)} >+</button>}
-
-        {/* delete button */}
-        <button className='FridgeItem__button' onClick={() => this.deleteItem(this.props.id)}>Delete</button>
+      <li className='FridgeItem__li mainContainer'>
         
-        {/* edit button */}
-        <Link to={`/demo/edit-item/${id}`}><button className='FridgeItem__button'>Edit</button></Link>
-      </>
+        <div className='FridgeItem__div addSubtractContainer buttonContainer'>
+            {/* if the current amount is less than the original amount, let an increment button show up */}
+            {(this.state.amount < initQuantity) 
+              ? <button className='FridgeItem__button addSubtract' onClick={() => this.updateCurrQuantity(1)} >{plusIcon}</button>
+              : <button className='FridgeItem__button addSubtract disabled'>{plusIcon}</button>
+            }
+
+            {/* if there's more than one item left, have the decrement button show up */}
+            {(this.state.amount > 1) 
+              ? <button className='FridgeItem__button addSubtract' onClick={() => this.updateCurrQuantity(-1)}>{minusIcon}</button>
+              : <button className='FridgeItem__button addSubtract disabled'>{minusIcon}</button>
+            }
+        </div>
+        
+        <div className={`FridgeItem__div sansAddSubtractButtons ${this.props.className}`}>
+         
+          <div className='FridgeItem__div topRow'>
+            <div className='FridgeItem__div deleteEditContainer buttonContainer'>
+              {/* delete button */}
+              <button className='FridgeItem__button deleteEdit' onClick={() => this.deleteItem(this.props.id)}><span className='notMobile'>Delete</span>{' '}<span className='mobile'>{deleteIcon}</span></button>
+
+              {/* edit button */}
+              <Link to={`/demo/edit-item/${id}`}><button className='FridgeItem__button deleteEdit'><span className='notMobile'>Edit</span>{' '}<span className='mobile'>{editIcon}</span></button></Link>
+            </div>  
+            <h4 className='FridgeItem__h4'>{name}</h4>
+          </div>
+
+          <ul className='FridgeItem__ul itemInfo bottomRow'>
+            <ul className='FridgeItem__ul itemInfo sansNote'>
+              <li className='FridgeItem__li itemInfo'>
+                <span className='FridgeItem__info'>Qty:</span> {this.state.amount || currQuantity}
+              </li>
+              <li className='FridgeItem__li itemInfo'>
+                <span className='notMobile'>Added:{' '}</span>{dateAdded}
+              </li>
+            </ul>
+            {note && <li className='FridgeItem__li note itemInfo'>
+              <span className='italic'>{note}</span>
+            </li>}
+          </ul>     
+
+        </div>
+        
+    </li>
     )
   }
 }

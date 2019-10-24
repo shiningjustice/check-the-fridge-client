@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FridgeSection from "../FridgeSection/FridgeSection";
 import ApiContext from "../../contexts/ApiContext";
 import EditItem from '../../routes/EditItem/EditItem';
+import './Fridge.css'
 
 export default class Fridge extends Component {
 	static contextType = ApiContext;
@@ -14,7 +15,7 @@ export default class Fridge extends Component {
 		const { sections=[] }= this.context;
 
 		return (
-			<>
+			<div className='Fridge__div mainContainer'>
 				<h2>Your Fridge</h2>
 				<div className='Fridge__div'>
 					{sections.map(section => 
@@ -27,7 +28,7 @@ export default class Fridge extends Component {
 					)}
 					<EditItem className='hidden' />
 				</div>
-			</>
+			</div>
 		);
 	}
 }

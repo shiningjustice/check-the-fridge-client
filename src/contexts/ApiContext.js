@@ -14,5 +14,6 @@ export default React.createContext({
   deleteItem: () => {},
   updateForOptions: () => {},
   setCurrentItemId: () => {},
-  getForStandard: () => {}
+  getForStandard: () => {},
+  showModal: () => {},
 })

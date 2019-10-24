@@ -1,0 +1,31 @@
+.DemoNav__div.mainContainer {
+  padding: 0.6rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  padding-left: .7rem; padding-right: .7rem;
+  background-color: #B8ADC8;
+}
+
+.DemoNav__Link {
+  padding-left: .5rem; padding-right: .5rem;
+}
+
+@media screen and (min-width: 768px) {
+  .DemoNav__Link {
+    display: inline;
+    width: 120px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .DemoNav__div.mainContainer {
+    justify-content: flex-end;
+  }
+
+  .Options__form.DemoNav {
+    display: none;
+  }
+}

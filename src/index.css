@@ -12,8 +12,22 @@ code {
     monospace;
 }
 
-button {
-  background: white;
-  outline: 1pt solid black;
-  border-style: none;
+.noMobile {
+  display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .mobile {
+    display: none;
+  }
+
+  .noMobile {
+    display: inherit;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .tablet {
+    display: none;
+  }
 }

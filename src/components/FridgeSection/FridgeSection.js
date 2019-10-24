@@ -5,8 +5,6 @@ import FridgeItem from '../FridgeItem/FridgeItem';
 // import EmptySection from './EmptySection/EmptySection';
 import ApiContext from '../../contexts/ApiContext';
 
-import './FridgeSection.css'
-
 const now = new Date();
 let daysAgo;
 let monthsAgo;
@@ -15,12 +13,6 @@ let monthsAgo;
 
 export default class FridgeSection extends Component {
   static contextType = ApiContext;
-
-  static defaultProps = {
-    match: {
-      params: {}
-    }
-  }
 
   // addsEmptyMessage = name => {
   //   if (this.context.items.length === 0) {
@@ -36,10 +28,8 @@ export default class FridgeSection extends Component {
   }
 
   formatTime = time => {    
-    const weekday = moment(time).format('dddd'); // Weekday spelled out
-    const date = moment(time).format('MMM D');
-    const dateWithYear = moment(time).format('MMM D YY');
-  
+    // const weekday = moment(time).format('dd'); // Weekday spelled out
+    const date = moment(time).format('MM/D');  
     if (daysAgo === 0) {
       return 'Today'
     }
@@ -47,13 +37,13 @@ export default class FridgeSection extends Component {
       return 'Yesterday'
     }
     else if (monthsAgo < 1) {
-      return `${daysAgo} days ago (${weekday}, ${date})`
+      return `${daysAgo} days ago (${date})`
     }
     else if (monthsAgo === 1) {
-      return `${monthsAgo} month ago (${dateWithYear})`
+      return `${monthsAgo} month ago`
     }
     else {
-      return `${monthsAgo} months ago (${dateWithYear})`
+      return `${monthsAgo} months ago`
     }
   }
 
@@ -116,17 +106,17 @@ export default class FridgeSection extends Component {
   handleMatchSectionId = (id, item) => {
     if (id === item.sectionId) {
       return (
-        <li key={item.id} className={this.handleAgeFormatting(item)}>
-          <FridgeItem 
-            name={item.name}
-            id={item.id}
-            dateAdded={this.formatTime(item.dateAdded)}
-            note={item.note}
-            initQuantity={item.initQuantity}
-            currQuantity={item.currQuantity}
-            // onDeleteItem={this.handleDeleteItem}
-          />
-        </li>
+        <FridgeItem 
+          key={item.id}
+          name={item.name}
+          id={item.id}
+          //className must go before dateAdded because it helps set dependent variables
+          className={this.handleAgeFormatting(item)}
+          dateAdded={this.formatTime(item.dateAdded)}
+          note={item.note}
+          initQuantity={item.initQuantity}
+          currQuantity={item.currQuantity}
+        />
       )
     }
 
@@ -135,10 +125,11 @@ export default class FridgeSection extends Component {
   render() {
     const { id, name } = this.props;
     const { items } = this.context;
+    
     return (
       <>
         <h3>{name}</h3>
-        <ul>
+        <ul className='FridgeSection__div mainContainer'>
           {items.map(item => this.handleMatchSectionId(id, item))}
         </ul>
       </>

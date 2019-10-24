@@ -1,15 +1,16 @@
 import React from 'react';
 
+import './Checkboxes.css';
+
 const Checkboxes = props => {
 
-	return ( 
+	return (
 		<div className={`Checkboxes__div mainContainer ${props.display}`}>
-			<h4 htmlFor={props.name} className='Options__label'>{props.name}</h4>
+			<h4 htmlFor={props.name} className='Options__h4'>{props.name}</h4>
 			<div className='Checkboxes__div checkboxContainer'>
 				{props.sections.map(section => {
 					return (
 						<div className='Checkboxes__div checkboxes' key={section.id}>
-							<label className='Checkboxes__label'>
 							<input
 								className='Checkboxes__input'
 								id={section.id}
@@ -18,9 +19,8 @@ const Checkboxes = props => {
 								value={section.id}
 								// checked={props.filteredFolders.indexOf(section) > -1}
 								type='checkbox'
-							/> 
-							{section.name}
-						</label>
+							/>
+							<label className='Checkboxes__label'>{section.name}</label>
 						</div>
 					)
 				})}
