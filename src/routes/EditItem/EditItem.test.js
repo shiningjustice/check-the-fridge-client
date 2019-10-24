@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import { BrowserRouter} from 'react-router-dom';
-import renderer from 'react-test-renderer';
+import { BrowserRouter } from 'react-router-dom';
+import EditItem from './EditItem';
 
-it('renders without crashing', () => {
+it ('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
     <BrowserRouter>
-      <App />
+      <EditItem />
     </BrowserRouter>
-  , div);
+  , div)
   ReactDOM.unmountComponentAtNode(div);
-});
+})

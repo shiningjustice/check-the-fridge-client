@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import config from '../../config';
 import ApiContext from '../../contexts/ApiContext';
+import itemFormatFunctions from './itemFormatFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
@@ -68,12 +69,24 @@ export default class FridgeItem extends Component {
   }
 
   render() {
-    const { name, initQuantity, currQuantity, dateAdded, note, id } = this.props;
+    if (this.props.item === null) {
+      return null;
+    }
+
+    const item = this.props.item;
+    const { name, dateAdded, initQuantity, currQuantity, note, id } = item;
+    const { handleAgeFormatting, formatTime } = itemFormatFunctions;
+
+    //Format component color (with corresponding class) and date className must go before dateAdded because it helps set dependent variables
+    const className = handleAgeFormatting(item);
+    const formattedDateAdded = formatTime(dateAdded)
+
     const deleteIcon = <FontAwesomeIcon icon={faTrash} />;
     const editIcon = <FontAwesomeIcon icon={faEdit} />;
     const plusIcon = <FontAwesomeIcon icon={faPlus} />;
     const minusIcon = <FontAwesomeIcon icon={faMinus} />;
 
+    console.log(this.props.item)
     return (
       <li className='FridgeItem__li mainContainer'>
         
@@ -91,7 +104,7 @@ export default class FridgeItem extends Component {
             }
         </div>
         
-        <div className={`FridgeItem__div sansAddSubtractButtons ${this.props.className}`}>
+        <div className={`FridgeItem__div sansAddSubtractButtons ${className}`}>
          
           <div className='FridgeItem__div topRow'>
             <div className='FridgeItem__div deleteEditContainer buttonContainer'>
@@ -110,7 +123,7 @@ export default class FridgeItem extends Component {
                 <span className='FridgeItem__info'>Qty:</span> {this.state.amount || currQuantity}
               </li>
               <li className='FridgeItem__li itemInfo'>
-                <span className='notMobile'>Added:{' '}</span>{dateAdded}
+                <span className='notMobile'>Added:{' '}</span>{formattedDateAdded}
               </li>
             </ul>
             {note && <li className='FridgeItem__li note itemInfo'>

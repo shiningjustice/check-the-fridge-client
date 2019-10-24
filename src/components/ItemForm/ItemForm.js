@@ -161,7 +161,6 @@ export default class ItemForm extends Component {
     const { error } = this.state;
     const { sections = [] } = this.context;
 		const { formName } = this.props;
-		console.log(this.state.sectionId, typeof(this.state.sectionId))
 		// const { item } = this.props;
 		
 		// let name; let sectionId; let dateAdded; let quantity; let note;

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
 import ApiContext from "../../contexts/ApiContext";
-import SearchBar from "./OptionsComponents/SearchBar";
-import Checkboxes from "./OptionsComponents/Checkboxes";
-import SortCategories from "./OptionsComponents/SortCategories";
+import SearchBar from "./OptionsComponents/SearchBar/SearchBar";
+import Checkboxes from "./OptionsComponents/Checkboxes/Checkboxes";
+import SortCategories from "./OptionsComponents/SortCategories/SortCategories";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";

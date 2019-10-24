@@ -49,7 +49,7 @@ class App extends Component {
     return query;
   }
 
-  updateForOptions = (search, filteredFolders, sort) => {
+  updateFor = (search, filteredFolders, sort) => {
     console.log('App.js: UFO: updateForOptions ran' )
     console.log(`App.js: UFO: search = ${search} and filteredFolders = ${filteredFolders} and sort = ${sort}`)
     let params = {};

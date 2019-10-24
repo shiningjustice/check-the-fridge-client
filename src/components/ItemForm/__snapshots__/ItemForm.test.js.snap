@@ -1,0 +1,283 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the UI as expected for Add Form 1`] = `
+<section
+  className="undefined__section mainContainer"
+>
+  <h2>
+    Edit
+     Item
+  </h2>
+  <form
+    className="undefined__form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="undefined__error"
+      role="alert"
+    />
+    <div>
+      <label
+        htmlFor="name"
+      >
+        Name
+        <span
+          className="ItemForm__Required"
+        >
+          *
+        </span>
+      </label>
+       
+      <input
+        defaultValue=""
+        id="name"
+        name="name"
+        onChange={[Function]}
+        required={true}
+        type="text"
+      />
+    </div>
+    <div>
+      <label
+        htmlFor="sectionId"
+      >
+        Section
+        <span
+          className="ItemForm__Required"
+        >
+          *
+        </span>
+      </label>
+       
+      <select
+        className="undefined__select"
+        id="sectionId"
+        name="sectionId"
+        onChange={[Function]}
+        required={true}
+        value=""
+      >
+        <option
+          value=""
+        >
+          Select one
+        </option>
+      </select>
+    </div>
+    <div>
+      <label
+        htmlFor="dateAdded"
+      >
+        Date Added
+        <span
+          className="ItemForm__Required"
+        >
+          *
+        </span>
+      </label>
+       
+      <input
+        defaultValue="2019-10-24"
+        id="dateAdded"
+        name="dateAdded"
+        onChange={[Function]}
+        required={true}
+        type="date"
+      />
+    </div>
+    <div>
+      <label
+        htmlFor="quantity"
+      >
+        Quantity
+        <span
+          className="ItemForm__Required"
+        >
+          *
+        </span>
+      </label>
+       
+      <input
+        defaultValue=""
+        id="quantity"
+        name="quantity"
+        onChange={[Function]}
+        required={true}
+        type="number"
+      />
+    </div>
+    <div>
+      <label
+        htmlFor="note"
+      >
+        Note
+      </label>
+       
+      <textarea
+        className="undefined__textarea"
+        defaultValue=""
+        id="note"
+        name="note"
+        onChange={[Function]}
+        type="text"
+      />
+    </div>
+    <div
+      className="undefined__buttonContainer"
+    >
+      <button
+        onClick={[Function]}
+      >
+        Cancel
+      </button>
+       
+      <button
+        type="submit"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</section>
+`;
+
+exports[`renders the UI as expected for Edit Form 1`] = `
+<section
+  className="undefined__section mainContainer"
+>
+  <h2>
+    Edit
+     Item
+  </h2>
+  <form
+    className="undefined__form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="undefined__error"
+      role="alert"
+    />
+    <div>
+      <label
+        htmlFor="name"
+      >
+        Name
+        <span
+          className="ItemForm__Required"
+        >
+          *
+        </span>
+      </label>
+       
+      <input
+        defaultValue=""
+        id="name"
+        name="name"
+        onChange={[Function]}
+        required={true}
+        type="text"
+      />
+    </div>
+    <div>
+      <label
+        htmlFor="sectionId"
+      >
+        Section
+        <span
+          className="ItemForm__Required"
+        >
+          *
+        </span>
+      </label>
+       
+      <select
+        className="undefined__select"
+        id="sectionId"
+        name="sectionId"
+        onChange={[Function]}
+        required={true}
+        value=""
+      >
+        <option
+          value=""
+        >
+          Select one
+        </option>
+      </select>
+    </div>
+    <div>
+      <label
+        htmlFor="dateAdded"
+      >
+        Date Added
+        <span
+          className="ItemForm__Required"
+        >
+          *
+        </span>
+      </label>
+       
+      <input
+        defaultValue="2019-10-24"
+        id="dateAdded"
+        name="dateAdded"
+        onChange={[Function]}
+        required={true}
+        type="date"
+      />
+    </div>
+    <div>
+      <label
+        htmlFor="quantity"
+      >
+        Quantity
+        <span
+          className="ItemForm__Required"
+        >
+          *
+        </span>
+      </label>
+       
+      <input
+        defaultValue=""
+        id="quantity"
+        name="quantity"
+        onChange={[Function]}
+        required={true}
+        type="number"
+      />
+    </div>
+    <div>
+      <label
+        htmlFor="note"
+      >
+        Note
+      </label>
+       
+      <textarea
+        className="undefined__textarea"
+        defaultValue=""
+        id="note"
+        name="note"
+        onChange={[Function]}
+        type="text"
+      />
+    </div>
+    <div
+      className="undefined__buttonContainer"
+    >
+      <button
+        onClick={[Function]}
+      >
+        Cancel
+      </button>
+       
+      <button
+        type="submit"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</section>
+`;
