@@ -16,6 +16,49 @@ code {
   display: none;
 }
 
+span.italic {
+  font-style: italic;
+}
+
+a, link {
+  text-decoration: none;
+}
+
+input {
+  border-radius: 5pt;
+  height: 1.5rem;
+  padding: .2rem;
+}
+
+button:hover, a:hover, Link:hover, .pseudoButton:focus {
+  cursor: pointer;
+  transform: translate(1px, 1px);
+}
+
+button:focus, a:focus, Link:focus, .pseudoButton:focus {
+  outline: auto 5px -webkit-focus-ring-color;
+  box-shadow: 0;
+}
+
+button.disabled:focus, button.disabled:hover {
+  outline: none;
+  box-shadow: none;
+  transform: none;
+  cursor: default;
+}
+
+button {
+  padding: .5rem;
+  background-color: #B8ADC8;
+  border-style: none;
+  border-radius: 5px;
+  font: inherit;
+}
+
+.noMobile {
+  display: none;
+}
+
 @media screen and (min-width: 768px) {
   .mobile {
     display: none;

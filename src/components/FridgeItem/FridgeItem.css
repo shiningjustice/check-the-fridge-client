@@ -93,9 +93,6 @@
   text-align: left;
 }
 
-.FridgeItem__ul.sansNote > * > * {
-  display: inline;
-}
 
 .FridgeItem__li.note {
   width: 40%;
@@ -108,14 +105,6 @@
 }
 
 @media screen and (min-width: 768px) {
-  /* .mobile {
-    display: none;
-  } */
-
-  .notMobile {
-    display: inherit;
-  }
-
   .FridgeItem__li.mainContainer {
     justify-content: center;
   }

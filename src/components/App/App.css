@@ -23,24 +23,13 @@
   width: 100%;
 }
 
-/* .App__nav > *{
-  width: 100%;
-  padding: .6rem;
-  display: flex;
-  flex-direction: row;
-} */
-
-.DemoNav__span.addText {
-  display: none;
-}
-
 nav>a {
   text-decoration: none;
   padding: 0 1rem;
 }
 
 main {
-  margin: 3rem .75rem 0;
+  margin: 2.6rem .75rem 0;
 }
 
 ul,li {
@@ -65,45 +54,4 @@ ul,li {
   border-radius: 5pt;
   background: blue;
   color: #FEF7EC;
-}
-
-/* Other App-wide Stylings */
-
-span.italic {
-  font-style: italic;
-}
-
-a, link {
-  text-decoration: none;
-}
-
-input {
-  border-radius: 5pt;
-  height: 1.5rem;
-  padding: .2rem;
-}
-
-button:hover, a:hover, Link:hover, .pseudoButton:focus {
-  cursor: pointer;
-  transform: translate(1px, 1px);
-}
-
-button:focus, a:focus, Link:focus, .pseudoButton:focus {
-  outline: auto 5px -webkit-focus-ring-color;
-  box-shadow: 0;
-}
-
-button.disabled:focus, button.disabled:hover {
-  outline: none;
-  box-shadow: none;
-  transform: none;
-  cursor: default;
-}
-
-button {
-  padding: .5rem;
-  background-color: #B8ADC8;
-  border-style: none;
-  border-radius: 5px;
-  font: inherit;
 }

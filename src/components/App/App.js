@@ -106,8 +106,6 @@ class App extends Component {
       error: null,
     })
 
-    console.log(config)
-
     Promise.all([
       fetch(`${config.API_ENDPOINT}/items`, { 
         method: 'GET',

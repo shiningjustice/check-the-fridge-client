@@ -16,6 +16,14 @@ export default class FridgeItem extends Component {
     amount: ''
   }
 
+  confirmDelete = (name, id) => {
+    let confirmDelete = window.confirm(`Are you sure you want to remove ${name} from your fridge? This is irreversible.`);
+
+    if (confirmDelete) {
+      this.deleteItem(id)
+    }
+  }
+
   deleteItem = itemId => {
     fetch(config.API_ENDPOINT + `/items/${itemId}`, {
       method: 'DELETE',
@@ -32,7 +40,6 @@ export default class FridgeItem extends Component {
       })
       .then(() => {
         this.context.deleteItem(itemId)
-        // this.props.onDeleteItem(itemId)
       })
       .catch(error => {
         console.error(error)
@@ -66,7 +73,7 @@ export default class FridgeItem extends Component {
 
   componentDidMount() {
     this.setState({
-      amount: this.props.currQuantity
+      amount: this.props.item.currQuantity
     })
   }
 
@@ -76,7 +83,8 @@ export default class FridgeItem extends Component {
     }
 
     const item = this.props.item;
-    const { name, dateAdded, initQuantity, currQuantity, note, id } = item;
+    const { name, dateAdded, initQuantity, note, id } = item;
+    const currQuantity= this.state.amount;
     const { handleAgeFormatting, formatTime } = itemFormatFunctions;
 
     //Format component color (with corresponding class) and date className must go before dateAdded because it helps set dependent variables
@@ -92,7 +100,7 @@ export default class FridgeItem extends Component {
       <li className='FridgeItem__li mainContainer'>
         
         <div className='FridgeItem__div addSubtractContainer buttonContainer'>
-            {/* if the current amount is less than the original amount, let an increment button show up */}
+            {/* if the current amount is less than the original amount, let an active increment button show up, else a disabled button */}
             {(this.state.amount < initQuantity) 
               ? <button className='FridgeItem__button addSubtract' onClick={() => this.updateCurrQuantity(1)} >{plusIcon}</button>
               : <button className='FridgeItem__button addSubtract disabled'>{plusIcon}</button>
@@ -110,8 +118,7 @@ export default class FridgeItem extends Component {
           <div className='FridgeItem__div topRow'>
             <div className='FridgeItem__div deleteEditContainer buttonContainer'>
               {/* delete button */}
-              <button className='FridgeItem__button deleteEdit' onClick={() => this.deleteItem(this.props.id)}><span className='notMobile'>Delete</span>{' '}<span className='mobile'>{deleteIcon}</span></button>
-
+              <button className='FridgeItem__button deleteEdit' onClick={() => this.confirmDelete(name, id)}><span className='notMobile'>Delete</span>{' '}<span className='mobile'>{deleteIcon}</span></button>
               {/* edit button */}
               <Link to={`/demo/edit-item/${id}`}><button className='FridgeItem__button deleteEdit'><span className='notMobile'>Edit</span>{' '}<span className='mobile'>{editIcon}</span></button></Link>
             </div>  
@@ -121,10 +128,10 @@ export default class FridgeItem extends Component {
           <ul className='FridgeItem__ul itemInfo bottomRow'>
             <ul className='FridgeItem__ul itemInfo sansNote'>
               <li className='FridgeItem__li itemInfo'>
-                <span className='FridgeItem__info'>Qty:</span> {this.state.amount || currQuantity}
+                <span className='FridgeItem__info'>Qty:</span> {currQuantity}
               </li>
               <li className='FridgeItem__li itemInfo'>
-                <span className='notMobile'>Added:{' '}</span>{formattedDateAdded}
+                <span className='notMobile'>Added: </span>{formattedDateAdded}
               </li>
             </ul>
             {note && <li className='FridgeItem__li note itemInfo'>
