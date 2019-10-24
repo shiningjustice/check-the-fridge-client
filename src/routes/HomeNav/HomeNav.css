@@ -17,3 +17,10 @@
 .HomeNav__button {
   outline: none;
 }
+
+@media screen and (min-width: 1024px) {
+  .HomeNav__div.mainContainer {
+    padding-right: calc((100vw - 1000px)/2);
+    padding-left: calc((100vw - 1000px)/2);
+  }
+}

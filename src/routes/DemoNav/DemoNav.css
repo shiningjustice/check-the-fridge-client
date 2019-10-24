@@ -23,6 +23,8 @@
 @media screen and (min-width: 1024px) {
   .DemoNav__div.mainContainer {
     justify-content: flex-end;
+    padding-right: calc((100vw - 1000px)/2);
+    padding-left: calc((100vw - 1000px)/2);
   }
 
   .Options__form.DemoNav {
