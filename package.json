@@ -15,7 +15,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prebuild": "react-scripts test",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "now --prod ./build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

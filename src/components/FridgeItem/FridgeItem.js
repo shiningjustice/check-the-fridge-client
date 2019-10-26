@@ -28,7 +28,7 @@ export default class FridgeItem extends Component {
     fetch(config.API_ENDPOINT + `/items/${itemId}`, {
       method: 'DELETE',
       headers: {
-        "Authorization": `${config.API_TOKEN}`,
+        "Authorization": `Bearer ${config.API_TOKEN}`,
         "Content-type": "application/json"
       }, 
     })
@@ -47,14 +47,14 @@ export default class FridgeItem extends Component {
   }
 
   updateCurrQuantity = amount => {
-    const newQuantity = this.props.currQuantity + amount;
+    const newQuantity = this.props.item.currQuantity + amount;
     const item = {quantity: newQuantity};
     
-    fetch(`${config.API_ENDPOINT}/items/${this.props.id}`, {
+    fetch(`${config.API_ENDPOINT}/items/${this.props.item.id}`, {
       method: 'PATCH',
       body: JSON.stringify(item),
       headers: {
-        "Authorization": `${config.API_TOKEN}`,
+        "Authorization": `Bearer ${config.API_TOKEN}`,
         "Content-type": "application/json"
       }
     })

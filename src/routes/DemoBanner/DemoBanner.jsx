@@ -7,7 +7,7 @@ const DemoBanner = props => {
   return (
     <div className='DemoBanner__div mainContainer'>
       <p className='DemoBanner__p'>You're currently viewing the app demo. 
-        <span className='notMobile'> Click <Link to='/' className='DemoBanner__link'>here</Link> to go home, or <span className='DemoBanner__div signup psuedoButton' onClick={() => props.toggleShow(true)}>here</span> to sign up.</span>
+        <span className='notMobile'> Click <Link to='/' className='DemoBanner__link'>here</Link> to go home, or <Link to='#' className='DemoBanner__Link signup psuedoButton' onClick={() => props.toggleShow(true)}>here</Link> to sign up.</span>
       </p> 
       <div className='mobile DemoBanner__div linkDiv'>
         <Link to='/'>Go home</Link>{' '}

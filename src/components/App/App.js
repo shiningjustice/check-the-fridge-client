@@ -48,7 +48,7 @@ class App extends Component {
     return query;
   }
 
-  updateFor = (search, filteredFolders, sort) => {
+  updateForOptions = (search, filteredFolders, sort) => {
     let params = {};
 
     //If search options are passed into option X, then set params.X
@@ -60,7 +60,13 @@ class App extends Component {
 
     const url = `${config.API_ENDPOINT}/results?${queryString}`
 
-    fetch(url)
+    fetch(url, { 
+      method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${config.API_TOKEN}`,
+        "Content-type": "application/json"
+      }
+    })
       .then(itemsRes => {
         if (!itemsRes.ok)
           return itemsRes.json().then(e => Promise.reject(e));
@@ -110,13 +116,13 @@ class App extends Component {
       fetch(`${config.API_ENDPOINT}/items`, { 
         method: 'GET',
         headers: {
-          "Authorization": `${config.API_TOKEN}`,
+          "Authorization": `Bearer ${config.API_TOKEN}`,
           "Content-type": "application/json"
         }, 
       }),
       fetch(`${config.API_ENDPOINT}/sections`, { 
         headers: {
-          "Authorization": `${config.API_TOKEN}`,
+          "Authorization": `Bearer ${config.API_TOKEN}`,
           "Content-type": "application/json"
         }
       }),

@@ -97,7 +97,7 @@ export default class ItemForm extends Component {
 			method: "POST",
 			body: JSON.stringify(item),
 			headers: {
-				"Authorization": `${config.API_TOKEN}`,
+				"Authorization": `Bearer ${config.API_TOKEN}`,
 				"Content-type": "application/json"
 			},
 		})
@@ -123,7 +123,7 @@ export default class ItemForm extends Component {
 			method: "PATCH",
 			body: JSON.stringify(item),
 			headers: {
-				"Authorization": `${config.API_TOKEN}`,
+				"Authorization": `Bearer ${config.API_TOKEN}`,
 				"Content-type": "application/json"
 			},
 		})
@@ -200,7 +200,6 @@ export default class ItemForm extends Component {
 							name='name'
               id='name'
               defaultValue={this.state.name}
-							// value={this.state.name.value}
 							onChange={e => this.handleInputChange(e)}
 							required
 						></input>
@@ -242,8 +241,8 @@ export default class ItemForm extends Component {
 							type='date'
 							name='dateAdded'
 							id='dateAdded'
+							value={this.state.dateAdded}
 							defaultValue={this.state.dateAdded}
-							// value={this.state.dateAdded.value}
 							onChange={e => this.handleInputChange(e)}
 							required
 						/>
@@ -260,7 +259,6 @@ export default class ItemForm extends Component {
 							name='quantity'
 							id='quantity'
 							defaultValue={this.state.quantity}
-							// value={this.state.quantity.value}
 							onChange={e => this.handleInputChange(e)}
 							required
 						></input>
@@ -274,7 +272,6 @@ export default class ItemForm extends Component {
 							name='note'
 							id='note'
 							defaultValue={this.state.note}
-							// value={this.state.note.value}
 							onChange={e => this.handleInputChange(e)}
 							className={`${formName}__textarea`}
 						></textarea>

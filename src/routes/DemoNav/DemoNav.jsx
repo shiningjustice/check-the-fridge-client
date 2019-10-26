@@ -10,8 +10,9 @@ import './DemoNav.css';
 const DemoNav = props => {
 	return (
 		<div className='DemoNav__div mainContainer'>
+      <Link to='/demo'><span className='DemoNav__span laptop'>Fridg·u·Dare</span></Link>
       <Options parent='DemoNav' />
-      <Link to='/demo/add-item' className='DemoNav__Link'>
+      <Link to='/demo/add-item' className='DemoNav__Link addItem'>
         <FontAwesomeIcon icon={faPlusCircle} />{' '}<span className='notMobile'>Add Item</span>
       </Link>
 		</div>

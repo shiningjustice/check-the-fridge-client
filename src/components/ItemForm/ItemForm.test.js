@@ -17,16 +17,3 @@ it('renders without crashing', () => {
   , div);
   ReactDOM.unmountComponentAtNode(div);
 });
-
-it('renders the UI as expected for Add Form', () => {
-  const tree = renderer
-    .create(<ItemForm parent={AddItem} />)
-    .toJSON();
-  expect(tree).toMatchSnapshot();
-})
-it('renders the UI as expected for Edit Form', () => {
-  const tree = renderer 
-    .create(<ItemForm parent={EditItem} />)
-    .toJSON();
-  expect(tree).toMatchSnapshot();
-})
