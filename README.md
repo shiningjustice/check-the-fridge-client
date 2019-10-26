@@ -18,23 +18,23 @@ HTML, CSS, JavaScript, React, Node.js
 Within the app itself (`/demo`), there are three main routes (`/demo`, `demo/add-item`, and `demo/edit-item/:itemId`). Independent of these three routes is the `Modal` component.  
 
 
-![The demo route](https://imgur.com/DYjab1W)
+![The demo route](https://imgur.com/DYjab1W.png)
 
 ### The `/demo` Route
 Here, the `Options` and `Fridge` components are rendered. For mobile and tablet widths, the `Options` component is rendered within the navigation bar (`DemoNav`). 
 
-![The options component in a smaller screen](https://imgur.com/lfyHO5t)
+![The options component in a smaller screen](https://imgur.com/lfyHO5t.png)
 For laptop and larger widths, it's rendered within the main component (`DemoMain`). The `Fridge` component consists of nested `FridgeSection` and `FridgeItem` components. 
 
 
-![The add item route](https://imgur.com/2KKIIyk)
-![The edit item route](https://imgur.com/6qQjsE8)
+![The add item route](https://imgur.com/2KKIIyk.png)
+![The edit item route](https://imgur.com/6qQjsE8.png)
 
 ### The `/demo/add-item` and  `/demo/edit-item/:itemId` Routes
 Nested within both the `AddItem` and `EditItem` components is the `ItemForm` component, which is used to render both forms (the parent component passes in necessary distinctions for function, UI, such as name of the form, the way info (if any) is rendered (i.e., item info for the edit item), as well as how the state is updated and fetch calls run for each. 
 
 
-![The Modal component](https://imgur.com/s1Ekbsx)
+![The Modal component](https://imgur.com/s1Ekbsx.png)
 
 ### The `Modal` Component
 The `Modal` component that takes signups is rendered outside of the `DemoMain` component as it can be rendered from the `/` route and was written from scratch. It displays  
