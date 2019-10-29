@@ -1,74 +1,39 @@
-# Check the Fridge Client App
+# Fridg·u·Dare Client App
+Created by Phoebe Law
 
-## Notes for Phoebe
-* it's breaking.... editItem line 16. it wants props at all times for some reason. gotta disable this somehow if we're not on the edit page. if you got to like edit-item/2 it'll work but yeah
+## Link to deployed version 
+https://fridgeudare-app.shiningjustice.now.sh/
 
-* I think the results stuff is good, except for how to pass the params/ how to get the server to render the right snpm tuff. 
+## Description
+Fridg·u·Dare was born from a desire to *1. reduce food waste* and *2. save time and money*. By keeping an inventory of what's in your fridge, visually aging items by item type, and keeping this as simple as possible, users should be able to accomplish both goals in a feasible way. This can be accomplished by helping you see what you have and if it's going bad (so you don't forget to buy something/don't forget that you already have something) and by helping you see if you have food you can finish before going out to eat. An secondary use for this is maintaining a clean fridge - being able to quickly see what is too old will prevent anything from going bad for too long (e.g., if tupperware is hiding behind the gallon of milk). 
 
-* set up tests 
+Additionally, this app can be scaled to include API support to simplify adding items to your list (specifically scanning barcodes to auto add item to the right category). 
 
-To do: Remove categories: breakfast, pet/baby, add (Frozen) to meat 
+## Tech Stack
+HTML, CSS, JavaScript, React, Node.js
 
-### Notes for next commit
+## Screenshots and Components 
+Within the app itself (`/demo`), there are three main routes (`/demo`, `demo/add-item`, and `demo/edit-item/:itemId`). Independent of these three routes is the `Modal` component.  
 
+### The `/demo` Route
 
-## Available Scripts
+![The demo route](https://imgur.com/DYjab1W.png)
 
-In the project directory, you can run:
+Here, the `Options` and `Fridge` components are rendered. For mobile and tablet widths, the `Options` component is rendered within the navigation bar (`DemoNav`). 
 
-### `npm start`
+![The options component in a smaller screen](https://imgur.com/lfyHO5t.png)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+For laptop and larger widths, it's rendered within the main component (`DemoMain`). The `Fridge` component consists of nested `FridgeSection` and `FridgeItem` components. 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### The `/demo/add-item` and  `/demo/edit-item/:itemId` Routes
 
-### `npm test`
+![The add item route](https://imgur.com/2KKIIyk.png)
+![The edit item route](https://imgur.com/6qQjsE8.png)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Nested within both the `AddItem` and `EditItem` components is the `ItemForm` component, which is used to render both forms (the parent component passes in necessary distinctions for function, UI, such as name of the form, the way info (if any) is rendered (i.e., item info for the edit item), as well as how the state is updated and fetch calls run for each. 
 
-### `npm run build`
+### The `Modal` Component
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![The Modal component](https://imgur.com/s1Ekbsx.png)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The `Modal` component that takes signups is rendered outside of the `DemoMain` component as it can be rendered from the `/` route and was written from scratch. It displays  
