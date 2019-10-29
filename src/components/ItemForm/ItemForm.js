@@ -221,7 +221,6 @@ export default class ItemForm extends Component {
 						>
 							<option value=''>Select one</option>
 							{sections.map(section => {
-								console.log(typeof(section.id));
 								return (
 									<option key={section.id} value={section.id}>
 									{section.name}

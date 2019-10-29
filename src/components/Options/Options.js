@@ -108,7 +108,6 @@ export default class Options extends Component {
 	};
 
 	handleRender = (parent, searchIcon, sections) => {
-		console.log("ran");
 		if (parent === "DemoMain") {
 			return (
 				<>
