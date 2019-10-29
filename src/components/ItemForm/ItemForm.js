@@ -163,18 +163,7 @@ export default class ItemForm extends Component {
     const { error } = this.state;
     const { sections = [] } = this.context;
 		const { formName } = this.props;
-		// const { item } = this.props;
-		
-		// let name; let sectionId; let dateAdded; let quantity; let note;
-		
-		// if (item) {
-		// 	name = item.name;
-		// 	sectionId = item.sectionId;
-		// 	dateAdded = item.dateAdded;
-		// 	quantity = item.currQuantity;
-		// 	note = item.note;
-		// }
-		
+
     return (
 			<section className={`${formName}__section mainContainer`}>
 				<h2>{this.props.formName === 'AddItem' ? 'Add' : 'Edit'} Item</h2>
@@ -241,7 +230,6 @@ export default class ItemForm extends Component {
 							name='dateAdded'
 							id='dateAdded'
 							value={this.state.dateAdded}
-							defaultValue={this.state.dateAdded}
 							onChange={e => this.handleInputChange(e)}
 							required
 						/>

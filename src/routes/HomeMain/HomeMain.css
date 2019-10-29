@@ -6,7 +6,9 @@
 }
 /* 
 .HomeMain__header {
-  background-image: url('https://imgur.com/fzaEZe8');
+  height: 40vh;
+  width: 100%;
+  background-image: url('/homeMainHeader.jpg');
 } */
 
 @media screen and (min-width: 786) {
