@@ -55,7 +55,7 @@ export default class Modal extends Component {
         </header>
         <h3>Almost, But Not Quite Yet</h3>
         <form className='Modal__form' onSubmit={(e) => this.handleSubmit(e)}>
-          <p>Thanks for your interest! We've still beta testing this app, but we can notify you when it's ready:</p>
+          <p>Thanks for your interest! We're still beta testing this app, but we can notify you when it's ready:</p>
 
           <div className='Modal__div inputs'>
             <div className='Modal__div inputAndLabel'>

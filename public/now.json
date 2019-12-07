@@ -1,14 +1,22 @@
 {
   "version": 2,
-  "name": "fridgeudare-app",
+  "name": "Fridgeudare",
   "routes": [
-      {
-        "src": "^/static/(.*)",
-        "dest": "/static/$1"
+    {
+      "src": "^/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "^/favicon.ico$",
+      "dest": "/favicon.ico"
       },
-      {
-        "src": ".*",
-        "dest": "/index.html"
-      }
+    {
+    "src": "^/manifest.json$",
+    "dest": "/manifest.json"
+    },
+    {
+      "src": ".*",
+      "dest": "/index.html"
+    }
   ]
 }
