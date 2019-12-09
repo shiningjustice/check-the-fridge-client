@@ -9,7 +9,6 @@ export default class FridgeSection extends Component {
 
   render() {
     const { id, name, display } = this.props;
-    console.log(display)
     const items = this.context.fridge[id - 1].sectionItems;
     return (
       <>
