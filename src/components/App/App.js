@@ -20,11 +20,11 @@ import './App.css';
 
 class App extends Component {
   state = {
+    fridge: [],
     items: [],
     sections: [],
     search: '',
     sort: '',
-    searchOn: true,
     currentItemId: '',
     error: null,
     showModal: false,
@@ -74,35 +74,36 @@ class App extends Component {
         return itemsRes.json()
       })
       .then((items) => {
-        let newSections; 
 
-        //Handle display of sections in fridge and checkboxes
-        filteredFolders= filteredFolders.map(folder => parseInt(folder));
-        //filteredFolders is an array with items
-        //using length instead of truthy because is sent in as an array, whose value is truthy
-        if (filteredFolders.length > 0) {
-          newSections = this.state.sections.filter(section =>  filteredFolders.indexOf(section.id) !== -1)
-        } //filteredFolders is a string
-        //using length instead of truthy because is sent in as an array, whose value is truthy
-        else if (filteredFolders.length > 0 && typeof(sort) !== 'object') {
-          newSections = filteredFolders
-        } //filteredFolders doesn't have any items in it/is falsy
-        else  {
-          newSections = this.state.sections.filter(section => this.state.items.find(item => section.id === item.sectionId))
-        }
+        const fridge = this.createFridge(items, this.state.sections)
+
+        //If section doesn't have any items in it, don't display it in 
+        // the main "Fridge" component (normally you display it but make 
+        // note that it's empty) and don't display it as a checkbox (`sectionsToDisplay`)
+        const sectionsToDisplay = this.state.sections.map(section => section);
+        fridge.map((section, index) => {
+          if (section.sectionItems.length === 0) {
+            section.display = false;
+            sectionsToDisplay[index].display = false;
+          } else {
+            sectionsToDisplay[index].display = true;
+            // don't need to do this for the fridge.section.display because it's already the default
+          }
+        })
         
         this.setState({
+          fridge,
           items,
           //display only sections that there are items for -- if true return section
           // sections: this.state.sections.filter(section => this.state.items.find(item => section.id === item.sectionId)),
-          sections: newSections,
+          sections: sectionsToDisplay,
           search: '', 
         })
       })
-      .catch(error => console.error({ error }))
+      .catch(error => console.error(error))
   }
 
-  getForStandard = () => {
+  getFridgeItemsAndSections = () => {
     //reset state
     this.setState({
       items: [],
@@ -135,12 +136,29 @@ class App extends Component {
 
         return Promise.all([itemsRes.json(), sectionsRes.json()])
       })
-      .then(([items, sections]) => {
-        this.setState({ items, sections })
+      .then(([items, sections]) => {        
+        //Create array fridge to store organized items and sections
+        const fridge = this.createFridge(items, sections);
+        this.setState({ items, sections, fridge })
       })
-      .catch(error => console.error({ error }))
+      .catch(error => console.error(error))
   }
 
+  createFridge = (items, sections) => {
+    //Create array fridge to store organized items and sections
+    const fridge = [];
+    sections.map(section => fridge.push(
+      {
+        sectionId: section.id,
+        sectionName: section.name,
+        sectionItems: [],
+        display: true,
+      }
+    ));
+    items.map(item => fridge[item.sectionId - 1].sectionItems.push(item));
+    return fridge;
+  }
+  
   addItem = newitem => {
     this.setState({
       items: [...this.state.items, newitem]
@@ -197,25 +215,24 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getForStandard();
+    this.getFridgeItemsAndSections();
   }
 
   
   render () {
     const value = {
-      state: this.state,
+      fridge: this.state.fridge,
       items: this.state.items,
       sections: this.state.sections,
       currentItemId: this.state.currentItemId,
       search: this.state.search,
-      searchOn: true,
       error: this.state.error,
       addItem: this.addItem,
       editItem: this.editItem,
       deleteItem: this.deleteItem,
       setCurrentItemId: this.setCurrentItemId,
       updateForOptions: this.updateForOptions,
-      getForStandard: this.getForStandard,
+      getFridgeItemsAndSections: this.getFridgeItemsAndSections,
       showModal: this.showModal,
     }
     const closeIcon = <FontAwesomeIcon icon={faTimes} />

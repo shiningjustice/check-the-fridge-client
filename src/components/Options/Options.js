@@ -86,7 +86,7 @@ export default class Options extends Component {
 	};
 	handleReset = () => {
 		//reset App, Options, and Checkbox states and does default get call
-		this.context.getForStandard();
+		this.context.getFridgeItemsAndSections();
 		this.setState({
 			search: "",
 			filteredFolders: [],

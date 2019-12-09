@@ -12,17 +12,18 @@ export default class Fridge extends Component {
 	}
 
 	render() {
-		const { sections=[] }= this.context;
+		const { fridge=[] }= this.context;
 
 		return (
 			<div className='Fridge__div mainContainer'>
 				<h2>Your Fridge</h2>
 				<div className='Fridge__div'>
-					{sections.map(section => 
-						<div className='FridgeSection__div' key={section.id}>
+					{fridge.map(section => 
+						<div className='FridgeSection__div' key={section.sectionId}>
 							<FridgeSection
-								id={section.id}
-								name={section.name}
+								id={section.sectionId}
+								name={section.sectionName}
+								display={section.display}
 							/>
 						</div>
 					)}

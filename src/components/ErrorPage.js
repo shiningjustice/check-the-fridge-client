@@ -14,22 +14,12 @@ export default class ErrorPage extends Component {
 		return { error };
 	}
 	render() {
-		if (this.state.error && this.context.items.length === 0) {
-			return (
-				<main className='error-page'>
-					<h1>Something seems to have gone wrong</h1>
-					<p>Try refreshing the page</p>
-					<p>{this.state.error}</p>
-				</main>
-			);
-		}
-
 		if (this.state.error) {
 			return (
 				<main className='error-page'>
-					<h1>Something seems to have gone wrong</h1>
+					<h1>Something went wrong</h1>
 					<p>Try refreshing the page</p>
-					<p>{this.state.error}</p>
+					<p>{this.state.error.message}</p>
 				</main>
 			);
 		}
