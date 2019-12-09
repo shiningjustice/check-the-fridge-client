@@ -9,7 +9,7 @@ import DemoNav from '../../routes/DemoNav/DemoNav';
 import DemoBanner from '../../routes/DemoBanner/DemoBanner';
 import AddItem from '../../routes/AddItem/AddItem';
 import EditItem from '../../routes/EditItem/EditItem';
-import config from '../../config';
+import FridgeApiService from '../../services/fridge-api-service';
 import ApiContext from '../../contexts/ApiContext';
 import ErrorPage from '../ErrorPage';
 import HomeMain from '../../routes/HomeMain/HomeMain';
@@ -58,49 +58,29 @@ class App extends Component {
 
     let queryString = this.formatQueryParams(params);
 
-    const url = `${config.API_ENDPOINT}/results?${queryString}`
-
-    fetch(url, { 
-      method: 'GET',
-      headers: {
-        "Authorization": `Bearer ${config.API_TOKEN}`,
-        "Content-type": "application/json"
-      }
-    })
-      .then(itemsRes => {
-        if (!itemsRes.ok)
-          return itemsRes.json().then(e => Promise.reject(e));
-
-        return itemsRes.json()
-      })
+    FridgeApiService.getFridgeItemsWithQuery(queryString)
       .then((items) => {
 
-        const fridge = this.createFridge(items, this.state.sections)
+        const { fridge, sections } = this.createFridge(items, this.state.sections)
 
         //If section doesn't have any items in it, don't display it in 
         // the main "Fridge" component (normally you display it but make 
         // note that it's empty) and don't display it as a checkbox (`sectionsToDisplay`)
-        const sectionsToDisplay = this.state.sections.map(section => section);
+        
         fridge.map((section, index) => {
           if (section.sectionItems.length === 0) {
             section.display = false;
-            sectionsToDisplay[index].display = false;
-          } else {
-            sectionsToDisplay[index].display = true;
-            // don't need to do this for the fridge.section.display because it's already the default
+            sections[index].display = false;
           }
         })
         
         this.setState({
           fridge,
           items,
-          //display only sections that there are items for -- if true return section
-          // sections: this.state.sections.filter(section => this.state.items.find(item => section.id === item.sectionId)),
-          sections: sectionsToDisplay,
+          sections,
           search: '', 
         })
       })
-      .catch(error => console.error(error))
   }
 
   getFridgeItemsAndSections = () => {
@@ -114,31 +94,13 @@ class App extends Component {
     })
 
     Promise.all([
-      fetch(`${config.API_ENDPOINT}/items`, { 
-        method: 'GET',
-        headers: {
-          "Authorization": `Bearer ${config.API_TOKEN}`,
-          "Content-type": "application/json"
-        }, 
-      }),
-      fetch(`${config.API_ENDPOINT}/sections`, { 
-        headers: {
-          "Authorization": `Bearer ${config.API_TOKEN}`,
-          "Content-type": "application/json"
-        }
-      }),
+      FridgeApiService.getItems(), 
+      FridgeApiService.getSections(),
     ])
-      .then(([itemsRes, sectionsRes]) => {
-        if (!itemsRes.ok)
-          return itemsRes.json().then(e => Promise.reject(e));
-        if (!sectionsRes.ok)
-          return sectionsRes.json().then(e => Promise.reject(e));
-
-        return Promise.all([itemsRes.json(), sectionsRes.json()])
-      })
       .then(([items, sections]) => {        
         //Create array fridge to store organized items and sections
-        const fridge = this.createFridge(items, sections);
+        const { fridge } = this.createFridge(items, sections);
+
         this.setState({ items, sections, fridge })
       })
       .catch(error => console.error(error))
@@ -147,16 +109,19 @@ class App extends Component {
   createFridge = (items, sections) => {
     //Create array fridge to store organized items and sections
     const fridge = [];
-    sections.map(section => fridge.push(
-      {
-        sectionId: section.id,
-        sectionName: section.name,
-        sectionItems: [],
-        display: true,
-      }
-    ));
+    sections.map(section => {
+      fridge.push(
+        {
+          sectionId: section.id,
+          sectionName: section.name,
+          sectionItems: [],
+          display: true,
+        }
+      )
+      section.display = true
+    });
     items.map(item => fridge[item.sectionId - 1].sectionItems.push(item));
-    return fridge;
+    return { fridge, sections };
   }
   
   addItem = newitem => {
