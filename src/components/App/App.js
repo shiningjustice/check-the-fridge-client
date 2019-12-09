@@ -255,7 +255,7 @@ class App extends Component {
           </div>
 
           <footer className='App__footer'>
-            <p className='footer__p'>Created by <a href='https://shiningjustice.github.io'>Phoebe Law</a></p>
+            <p className='footer__p'>Created by <a href='https://shiningjustice.github.io' target="_blank" rel="noopener noreferrer">Phoebe Law</a></p>
           </footer>
         </div>     
       </ApiContext.Provider>
