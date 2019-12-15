@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import config from '../../config';
+import SignupsApiService from '../../services/signups-api-service';
 import './Modal.css';
 
 export default class Modal extends Component {
@@ -10,19 +10,7 @@ export default class Modal extends Component {
     const { name, email } = this.state;
     const signup = { name, email };
 
-    fetch(config.API__ENDPOINT + '/signups', {
-      method: 'POST',
-      body: JSON.stringify(signup),
-      headers: {
-        "Authorization": `Bearer ${config.API_TOKEN}`,
-        "Content-type": "application/json"
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => Promise.reject(error))
-        }
-      })
+    SignupsApiService.postSignups(signup)
       .then(() => {
         this.setState({
           name: '',

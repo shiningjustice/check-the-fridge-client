@@ -9,7 +9,9 @@ import DemoNav from '../../routes/DemoNav/DemoNav';
 import DemoBanner from '../../routes/DemoBanner/DemoBanner';
 import AddItem from '../../routes/AddItem/AddItem';
 import EditItem from '../../routes/EditItem/EditItem';
-import FridgeApiService from '../../services/fridge-api-service';
+import ResultsApiService from '../../services/results-api-service';
+import ItemsApiService from '../../services/items-api-service';
+import SectionsApiService from '../../services/sections-api-service';
 import ApiContext from '../../contexts/ApiContext';
 import ErrorPage from '../ErrorPage';
 import HomeMain from '../../routes/HomeMain/HomeMain';
@@ -58,7 +60,7 @@ class App extends Component {
 
     let queryString = this.formatQueryParams(params);
 
-    FridgeApiService.getFridgeItemsWithQuery(queryString)
+    ResultsApiService.getFridgeItemsWithQuery(queryString)
       .then((items) => {
 
         const { fridge, sections } = this.createFridge(items, this.state.sections)
@@ -81,6 +83,7 @@ class App extends Component {
           search: '', 
         })
       })
+      .catch(error => console.error(error))
   }
 
   getFridgeItemsAndSections = () => {
@@ -94,8 +97,8 @@ class App extends Component {
     })
 
     Promise.all([
-      FridgeApiService.getItems(), 
-      FridgeApiService.getSections(),
+      ItemsApiService.getItems(), 
+      SectionsApiService.getSections(),
     ])
       .then(([items, sections]) => {        
         //Create array fridge to store organized items and sections

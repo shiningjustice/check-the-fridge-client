@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import config from '../../config';
 import ApiContext from '../../contexts/ApiContext';
+import ItemsApiService from '../../services/items-api-service';
 
 import './ItemForm.css'
 
@@ -93,20 +93,7 @@ export default class ItemForm extends Component {
 	};
 
 	handlePost = item => {
-		fetch(`${config.API_ENDPOINT}/items`, {
-			method: "POST",
-			body: JSON.stringify(item),
-			headers: {
-				"Authorization": `Bearer ${config.API_TOKEN}`,
-				"Content-type": "application/json"
-			},
-		})
-			.then(res => {
-				if (!res.ok) {
-					return res.json().then(e => Promise.reject(e));
-				}
-				return res.json();
-      })
+		ItemsApiService.postItem(item)
 			.then(data => {
 				this.resetState();
 				this.context.addItem(data)
@@ -119,20 +106,7 @@ export default class ItemForm extends Component {
 	}
 
 	handlePatch = item => {
-		fetch(`${config.API_ENDPOINT}/items/${this.state.id}`, {
-			method: "PATCH",
-			body: JSON.stringify(item),
-			headers: {
-				"Authorization": `Bearer ${config.API_TOKEN}`,
-				"Content-type": "application/json"
-			},
-		})
-			.then(res => {
-				if (!res.ok) {
-					return res.json().then(e => Promise.reject(e));
-				}
-				return res;
-      })
+		ItemsApiService.patchItem(item, this.state.id)
 			.then(() => {
 				this.resetState();
 				this.context.editItem(item)

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import config from '../../config';
 import ApiContext from '../../contexts/ApiContext';
+import ItemsApiService from '../../services/items-api-service';
 import itemFormatFunctions from './itemFormatFunctions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
@@ -20,49 +21,21 @@ export default class FridgeItem extends Component {
     let confirmDelete = window.confirm(`Are you sure you want to remove ${name} from your fridge? This is irreversible.`);
 
     if (confirmDelete) {
-      this.deleteItem(id)
+      ItemsApiService.deleteItem(id)
+        .then(() => {
+          this.context.deleteItem(id)
+        })
+        .catch(error => {
+          console.error(error)
+        })
     }
-  }
-
-  deleteItem = itemId => {
-    fetch(config.API_ENDPOINT + `/items/${itemId}`, {
-      method: 'DELETE',
-      headers: {
-        "Authorization": `Bearer ${config.API_TOKEN}`,
-        "Content-type": "application/json"
-      }, 
-    })
-      .then( res => {
-        if (!res.ok){
-          return res.json().then(error => Promise.reject(error))
-        }
-        //no content returned if call is successful, so skip this line
-      })
-      .then(() => {
-        this.context.deleteItem(itemId)
-      })
-      .catch(error => {
-        console.error(error)
-      })
   }
 
   updateCurrQuantity = amount => {
     const newQuantity = this.props.item.currQuantity + amount;
     const item = {quantity: newQuantity};
-    
-    fetch(`${config.API_ENDPOINT}/items/${this.props.item.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(item),
-      headers: {
-        "Authorization": `Bearer ${config.API_TOKEN}`,
-        "Content-type": "application/json"
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json().then(error => Promise.reject(error))
-        }
-      })
+
+    ItemsApiService.patchItem(item, this.props.item.id)
       .then(() => {
         this.setState({amount: this.state.amount + amount})
       })
