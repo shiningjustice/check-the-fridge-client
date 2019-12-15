@@ -9,6 +9,7 @@ export default React.createContext({
   filteredFolders: [], 
   sort: '', 
   error: null,
+  errorDemoMain: null,
   addItem: () => {},
   editItem: () => {},
   deleteItem: () => {},

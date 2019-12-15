@@ -1,26 +1,39 @@
+/*******************************************************************
+  IMPORTS
+*******************************************************************/
+//Library Components
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 
+//Components
 import Modal from '../Modal/Modal';
-
 import HomeNav from '../../routes/HomeNav/HomeNav';
 import DemoMain from '../../routes/DemoMain/DemoMain';
 import DemoNav from '../../routes/DemoNav/DemoNav';
 import DemoBanner from '../../routes/DemoBanner/DemoBanner';
 import AddItem from '../../routes/AddItem/AddItem';
 import EditItem from '../../routes/EditItem/EditItem';
+import ErrorPage from '../ErrorPage';
+import HomeMain from '../../routes/HomeMain/HomeMain';
+
+//Contexts, services and the likes
 import ResultsApiService from '../../services/results-api-service';
 import ItemsApiService from '../../services/items-api-service';
 import SectionsApiService from '../../services/sections-api-service';
 import ApiContext from '../../contexts/ApiContext';
-import ErrorPage from '../ErrorPage';
-import HomeMain from '../../routes/HomeMain/HomeMain';
 
+
+//Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
+//CSS
 import './App.css';
 
 class App extends Component {
+  /*******************************************************************
+    STATE
+  ********************************************************************/  
   state = {
     fridge: [],
     items: [],
@@ -29,9 +42,13 @@ class App extends Component {
     sort: '',
     currentItemId: '',
     error: null,
+    errorDemoMain: null,
     showModal: false,
   }
 
+  /*******************************************************************
+    STATE MODIFYING FUNCTIONS
+  ********************************************************************/
   toggleShowModal = boolean => {
     this.setState({ showModal: boolean })
   }
@@ -60,7 +77,7 @@ class App extends Component {
 
     let queryString = this.formatQueryParams(params);
 
-    ResultsApiService.getFridgeItemsWithQuery(queryString)
+    ResultsApiService.getQuery(queryString)
       .then((items) => {
 
         const { fridge, sections } = this.createFridge(items, this.state.sections)
@@ -83,7 +100,7 @@ class App extends Component {
           search: '', 
         })
       })
-      .catch(error => console.error(error))
+      .catch(error => this.setDemoMainError(error))
   }
 
   getFridgeItemsAndSections = () => {
@@ -106,7 +123,7 @@ class App extends Component {
 
         this.setState({ items, sections, fridge })
       })
-      .catch(error => console.error(error))
+      .catch(error => this.setDemoMainError(error))
   }
 
   createFridge = (items, sections) => {
@@ -163,6 +180,13 @@ class App extends Component {
     })
   }
 
+  setDemoMainError = error => {
+    this.setState({ errorDemoMain: error.error }, () => {console.log(this.state.errorDemoMain)});
+  }
+
+  /*******************************************************************
+    ROUTING FUNCTIONS
+  ********************************************************************/
   renderNavRoutes() {
     return (
       <>
@@ -182,19 +206,27 @@ class App extends Component {
     );
   }
 
+  /*******************************************************************
+    lIFECYCLE FUNCTIONS
+  ********************************************************************/
   componentDidMount() {
     this.getFridgeItemsAndSections();
   }
 
-  
+  /*******************************************************************
+    RENDER FUNCTION
+  ********************************************************************/
   render () {
     const value = {
+      //Vars 
       fridge: this.state.fridge,
       items: this.state.items,
       sections: this.state.sections,
       currentItemId: this.state.currentItemId,
       search: this.state.search,
       error: this.state.error,
+      errorDemoMain: this.state.errorDemoMain,
+      //funcs
       addItem: this.addItem,
       editItem: this.editItem,
       deleteItem: this.deleteItem,

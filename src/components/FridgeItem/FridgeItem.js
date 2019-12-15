@@ -24,9 +24,7 @@ export default class FridgeItem extends Component {
         .then(() => {
           this.context.deleteItem(id)
         })
-        .catch(error => {
-          console.error(error)
-        })
+        .catch(error => console.error(error))
     }
   }
 
@@ -38,10 +36,8 @@ export default class FridgeItem extends Component {
       .then(() => {
         this.setState({amount: this.state.amount + amount})
       })
-      .catch(error => {
-        console.error(error)
-      })
-  }
+      .catch(error => console.error(error))
+    }
 
   componentDidMount() {
     this.setState({

@@ -100,10 +100,7 @@ export default class ItemForm extends Component {
 				this.context.addItem(data)
 				this.props.history.push('/demo');
 			})
-			.catch(error => {
-				console.error(error);
-				this.setState({ error });
-			});
+			.catch(error => this.setState({ error: error.error}))
 	}
 
 	handlePatch = item => {
@@ -113,10 +110,7 @@ export default class ItemForm extends Component {
 				this.context.editItem(item)
 				this.props.history.push('/demo');
 			})
-			.catch(error => {
-				console.error(error);
-				this.setState({ error });
-			});
+			.catch(error => this.setState({ error: error.error}))
 	}
 
 	componentDidMount = () => {
@@ -135,7 +129,7 @@ export default class ItemForm extends Component {
   };
 
   render() {
-    const { error } = this.state;
+		const { error } = this.state;
     const { sections = [] } = this.context;
 		const { formName } = this.props;
 
@@ -146,8 +140,8 @@ export default class ItemForm extends Component {
 					className={`${formName}__form`}
           onSubmit={(e) => this.handleSubmit(e)}
 				>
-					<div className={`${formName}__error`} role='alert'>
-            {error && <p>{error.message}</p>}
+					<div className={`${formName}__error`} >
+            {error && error.message}
             {this.state.missingFields &&
 							`Please fill out the following required fields and resubmit: ${this.state.missingFields}`}
 					</div>

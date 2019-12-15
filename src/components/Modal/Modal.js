@@ -17,9 +17,7 @@ export default class Modal extends Component {
           email: ''
         })
       })
-      .catch(error => {
-        console.error(error)
-      });
+      .catch(error => console.error(error))
   }
 
   handleChange = e => {
