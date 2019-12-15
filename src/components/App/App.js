@@ -69,7 +69,7 @@ class App extends Component {
         // the main "Fridge" component (normally you display it but make 
         // note that it's empty) and don't display it as a checkbox (`sectionsToDisplay`)
         
-        fridge.map((section, index) => {
+        fridge.forEach((section, index) => {
           if (section.sectionItems.length === 0) {
             section.display = false;
             sections[index].display = false;
@@ -112,7 +112,7 @@ class App extends Component {
   createFridge = (items, sections) => {
     //Create array fridge to store organized items and sections
     const fridge = [];
-    sections.map(section => {
+    sections.forEach(section => {
       fridge.push(
         {
           sectionId: section.id,
@@ -208,7 +208,7 @@ class App extends Component {
     return (
       <ApiContext.Provider value={value}>
         <div className='App'>
-          <div className='App___sansFooter beans'>
+          <div className='App___sansFooter'>
             <nav className='App__nav'>
               {this.renderNavRoutes()}{' '}
               <Route path='/demo' component={() => <DemoBanner toggleShow={this.toggleShowModal} />} />

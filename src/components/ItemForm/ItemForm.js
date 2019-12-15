@@ -45,7 +45,8 @@ export default class ItemForm extends Component {
 		})
 	}
 
-  handleClickCancel = () => {
+  handleClickCancel = (e) => {
+		e.preventDefault();
 		this.resetState();
 		this.props.history.push('/demo');
   };
@@ -239,7 +240,7 @@ export default class ItemForm extends Component {
 					</div>
 
 					<div className={`${formName}__buttonContainer`}>
-            <button onClick={this.handleClickCancel}>Cancel</button>
+            <button onClick={e => this.handleClickCancel(e)}>Cancel</button>
             {' '}
             <button type='submit'>{`Save`}</button>
 					</div>

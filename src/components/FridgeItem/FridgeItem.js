@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import config from '../../config';
 import ApiContext from '../../contexts/ApiContext';
 import ItemsApiService from '../../services/items-api-service';
 import itemFormatFunctions from './itemFormatFunctions';
