@@ -11,8 +11,8 @@ export default class FridgeSection extends Component {
   static contextType = ApiContext; 
 
   render() {
-    const { id, name, display, fridge } = this.props;
-    const items = fridge[id - 1].sectionItems;
+    const { id, name, display } = this.props;
+    const items = this.context.fridge[id - 1].sectionItems;
 
     return (
       <>
