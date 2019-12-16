@@ -5,11 +5,15 @@ import FridgeItem from '../FridgeItem/FridgeItem';
 import ApiContext from '../../contexts/ApiContext';
 
 export default class FridgeSection extends Component {
+  state = {
+    fridge: null,
+  }
   static contextType = ApiContext; 
 
   render() {
-    const { id, name, display } = this.props;
-    const items = this.context.fridge[id - 1].sectionItems;
+    const { id, name, display, fridge } = this.props;
+    const items = fridge[id - 1].sectionItems;
+
     return (
       <>
         {/* If we're returning a search/filter/sort query, only return section if it contains an item */}

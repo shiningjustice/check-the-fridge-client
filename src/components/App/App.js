@@ -145,8 +145,14 @@ class App extends Component {
   }
   
   addItem = newitem => {
+    const newItems = [...this.state.items, newitem];
+
+    //Create and update the fridge and sections as this is what is used to render the fridge
+    const { fridge, sections } = this.createFridge(newItems, this.state.sections);
     this.setState({
-      items: [...this.state.items, newitem]
+      items: newItems,
+      fridge,
+      sections
     })
   }
 
@@ -162,15 +168,25 @@ class App extends Component {
     let newItems = this.state.items;
     newItems.splice(index, 1, editedItem);
 
+    //Create and update the fridge and sections as this is what is used to render the fridge
+    const { fridge, sections } = this.createFridge(newItems, this.state.sections);
+    
     this.setState({
-      items: newItems
+      items: newItems,
+      fridge,
+      sections
     })
   }
 
   deleteItem = itemId => {
     const newItems = this.state.items.filter(item => item.id !==itemId);
+    
+    //Create and update the fridge and sections as this is what is used to render the fridge
+    const { fridge, sections } = this.createFridge(newItems, this.state.sections);
     this.setState({
-      items: newItems
+      items: newItems,
+      fridge,
+      sections,
     })
   }
 
@@ -181,7 +197,7 @@ class App extends Component {
   }
 
   setDemoMainError = error => {
-    this.setState({ errorDemoMain: error.error }, () => {console.log(this.state.errorDemoMain)});
+    this.setState({ errorDemoMain: error.error });
   }
 
   /*******************************************************************

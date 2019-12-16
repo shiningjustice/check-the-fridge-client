@@ -13,11 +13,10 @@ export default class Fridge extends Component {
 
 	render() {
 		const { errorDemoMain, fridge=[] }= this.context;
-
 		return (
 			<div className='Fridge__div mainContainer'>
 				<h2>Your Fridge</h2>
-				
+
 				{errorDemoMain ? (
 					<div className='DemoMain__div errorDiv'>{errorDemoMain}</div>
 				) : (
