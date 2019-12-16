@@ -1,17 +1,25 @@
+/*******************************************************************
+	IMPORTS
+*******************************************************************/
+//Libraries
 import React, { Component } from 'react';
 import moment from 'moment';
-
+// Contexts and services
 import ApiContext from '../../contexts/ApiContext';
 import ItemsApiService from '../../services/items-api-service';
-
+// CSS
 import './ItemForm.css'
 
+// Other Components
 const Required = () => (
   <span className='ItemForm__Required'>*</span>
 )
 
+/*******************************************************************
+	`ItemForm` COMPONENT
+*******************************************************************/
 export default class ItemForm extends Component {  
-
+	// Context
   static contextType = ApiContext;
 
   state = {
@@ -24,15 +32,6 @@ export default class ItemForm extends Component {
 		note: '',
   };
   
-  handleInputChange = e => {
-		let value = e.target.value;
-		let name = e.target.name;
-		
-		this.setState({
-			[name]: value
-		});
-  }
-  
 	resetState = () => {
 		this.setState({
 			error: null,
@@ -44,12 +43,6 @@ export default class ItemForm extends Component {
       missingFields: [],
 		})
 	}
-
-  handleClickCancel = (e) => {
-		e.preventDefault();
-		this.resetState();
-		this.props.history.push('/demo');
-  };
 
   addMissingField = field => {
     this.setState({
@@ -70,9 +63,28 @@ export default class ItemForm extends Component {
 		// 		this.addMissingField(field)
 		// 	}
 		// });
+	};
+	
+	/*******************************************************************
+    HANDLER FUNCTIONS
+  *******************************************************************/
+	handleInputChange = e => {
+		let value = e.target.value;
+		let name = e.target.name;
+		
+		this.setState({
+			[name]: value
+		});
+	}
+	
+	handleClickCancel = e => {
+		e.preventDefault();
+		this.resetState();
+		this.props.history.push('/demo');
   };
   
-  handleSubmit = (e) => {
+	
+  handleSubmit = e => {
 		e.preventDefault();
 
 		this.validateOnSubmit();
@@ -113,7 +125,13 @@ export default class ItemForm extends Component {
 			.catch(error => this.setState({ error: error.error}))
 	}
 
+	/*******************************************************************
+    LIFECYCLE METHODS
+  *******************************************************************/
 	componentDidMount = () => {
+		// Set up form to submit on enter keypress
+		window.addEventListener("keypress", this.handlePressEnter);
+
 		const { item } = this.props;
 
 		if (item) {
@@ -126,8 +144,16 @@ export default class ItemForm extends Component {
 				note: item.note,
 			})
 		}
-  };
+	};
+	
+	componentWillUnmount = () => {
+		// Remove listerner that sets up form to submit on keypress of enter key
+		window.removeEventListener("keypress", this.handlePressEnter);
+	};
 
+	/*******************************************************************
+    RENDER
+  *******************************************************************/
   render() {
 		const { error } = this.state;
     const { sections = [] } = this.context;
@@ -159,6 +185,7 @@ export default class ItemForm extends Component {
               id='name'
               defaultValue={this.state.name}
 							onChange={e => this.handleInputChange(e)}
+							autoFocus
 							required
 						></input>
 					</div>
@@ -236,7 +263,7 @@ export default class ItemForm extends Component {
 					<div className={`${formName}__buttonContainer`}>
             <button onClick={e => this.handleClickCancel(e)}>Cancel</button>
             {' '}
-            <button type='submit'>{`Save`}</button>
+            <button type="submit">{`Save`}</button>
 					</div>
 				</form>
 			</section>

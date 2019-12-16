@@ -46,7 +46,7 @@ export default class Modal extends Component {
           <div className='Modal__div inputs'>
             <div className='Modal__div inputAndLabel'>
               <label className='Modal__label italic' htmlFor='firstName'>First Name</label>{' '}
-              <input className='Modal__input' type='text' placeholder="Rosemary Trout" onChange={e => this.handleChange(e)} required/>
+              <input className='Modal__input' type='text' placeholder="Rosemary Trout" onChange={e => this.handleChange(e)} autoFocus required/>
             </div>
             
             <div className='Modal__div inputAndLabel'>
