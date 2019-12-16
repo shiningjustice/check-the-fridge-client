@@ -1,5 +1,4 @@
 import config from '../config';
-import ApiContext from '../contexts/ApiContext';
 
 const SignupsApiService = {
   postSignups(signup) {

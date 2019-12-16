@@ -6,14 +6,14 @@ const Checkboxes = props => {
 
 	return (
 		<div className={`Checkboxes__div mainContainer ${props.display}`}>
-			<h4 htmlFor={props.name} className='Options__h4'>{props.name}</h4>
+			<h4 htmlFor={props.name} className={`Options__h4 ${props.parent}`}>{props.name}</h4>
 			<div className='Checkboxes__div checkboxContainer'>
 				{/* If a search/sort/filter is applied, display checkbox only if section 
 				is still displayed (if it contains items returned from the query) */
 				props.sections.map(section => section.display && (
-					<div className='Checkboxes__div checkboxes' key={section.id}>
+					<label className={`Checkboxes__label ${props.parent}`} key={section.id}>
 						<input
-							className='Checkboxes__input'
+							className={`Checkboxes__input ${props.parent}`}
 							id={section.id}
 							name={section.name}
 							onChange={props.handleChange}
@@ -21,10 +21,8 @@ const Checkboxes = props => {
 							// checked={props.filteredFolders.indexOf(section) > -1}
 							type='checkbox'
 						/>
-						<label className='Checkboxes__label'>{section.name}</label>
-					</div>
-					)
-				)}
+					{section.name}</label>
+				))}
 			</div>
 		</div>
 	)

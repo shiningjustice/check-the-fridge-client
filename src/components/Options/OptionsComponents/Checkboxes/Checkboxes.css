@@ -1,11 +1,20 @@
-.Checkboxes__div.checkboxes {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-content: center;
-  flex-wrap: wrap;
-}
-
+/* Format for Checkboxes rendering in the NavBar (DemoNav) */
 .Checkboxes__label {
   font-size: 1.1rem;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
 }
+
+.Checkboxes__input.DemoNav {
+  margin: 0 .5em;
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 20px;
+}
+
+.Options__h4.DemoNav {
+  margin: 0 1.33em 1.33em;
+}
+
+/* Format for Checkboxes rendering in the Main Section (DemoMain) */

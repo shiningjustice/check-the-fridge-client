@@ -40,6 +40,7 @@
   padding: 0px;
 }
 .Checkboxes__div.checkboxContainer{
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -75,7 +76,7 @@
     justify-content: center;
     align-items: center;
     flex-basis: 1;
-    height: 450px;
+    height: 480px;
     background-color: grey;
     border-radius: 3px;
     margin: 7.5rem 1rem 0 0;
@@ -137,7 +138,7 @@
   }
 
   .Checkboxes__div.checkboxContainer {
-    height: 160px;
+    height: 180px;
   }
   .Checkboxes__div.checkboxes {
     padding: 0 0 0 10px;

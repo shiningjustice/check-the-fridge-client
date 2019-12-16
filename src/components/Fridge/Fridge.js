@@ -12,23 +12,29 @@ export default class Fridge extends Component {
 	}
 
 	render() {
-		const { fridge=[] }= this.context;
+		const { errorDemoMain, fridge=[] }= this.context;
 
 		return (
 			<div className='Fridge__div mainContainer'>
 				<h2>Your Fridge</h2>
-				<div className='Fridge__div'>
-					{fridge.map(section => 
-						<div className='FridgeSection__div' key={section.sectionId}>
-							<FridgeSection
-								id={section.sectionId}
-								name={section.sectionName}
-								display={section.display}
-							/>
-						</div>
-					)}
-					<EditItem className='hidden' />
-				</div>
+				
+				{errorDemoMain ? (
+					<div className='DemoMain__div errorDiv'>{errorDemoMain}</div>
+				) : (
+					<div className='Fridge__div'>
+						{fridge.map(section => 
+							<div className='FridgeSection__div' key={section.sectionId}>
+								<FridgeSection
+									id={section.sectionId}
+									name={section.sectionName}
+									display={section.display}
+								/>
+							</div>
+						)}
+						<EditItem className='hidden' />
+					</div>
+				)}
+
 			</div>
 		);
 	}
