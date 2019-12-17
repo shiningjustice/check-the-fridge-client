@@ -5,8 +5,8 @@ Fridg·u·Dare was born from a desire to *1. reduce food waste* and *2. save tim
 
 Additionally, this app can be scaled to include API support to simplify adding items to your list (specifically scanning barcodes to auto add item to the right category). 
 
-[Link to live site]https://fridgeudare-app.shiningjustice.now.sh/
-[Link to server repo]https://github.com/shiningjustice/fridgeudare-server
+[Link to live site](https://fridgeudare-app.shiningjustice.now.sh/)
+[Link to server repo](https://github.com/shiningjustice/fridgeudare-server)
 
 ## Tech Stack
 HTML, CSS, JavaScript, React, Node.js
